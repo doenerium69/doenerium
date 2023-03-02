@@ -2,13 +2,11 @@
 
 #
 
-<div align="center">
 !!!!!!!!!
 NOTE: This is an outdated version and might be detected by the Anti Virus programs.
 <br/>
   [Click me for the fixed version of doenerium](https://github.com/doenerium69/doenerium-fixed) 
 !!!!!!!!!
-  </div>
 
 <h1 align="center">
 ⚔️ Doenerium 🛡️
