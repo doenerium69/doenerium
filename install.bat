@@ -4,6 +4,5 @@ echo NOTE: Make sure you have NodeJS and Visual Studio with all C++ prequisites 
 
 call npm install .
 call npm install -g pkg
-call npm install node-gyp
-call npm install win-dpapi
-call npm rebuild
+call npm install -g node-gyp
+call npm install boukiapi

