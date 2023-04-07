@@ -110,7 +110,7 @@
 
 ### 📸 〢 Screenshots
 
-<img title="" src="https://github.com/doenerium69/doenerium/blob/doener/screenshots/1.png?raw=true" alt="" width="450"><img title="" src="https://github.com/doenerium69/doenerium/blob/doener/screenshots/2.png?raw=true" alt="" width="439">![](https://github.com/doenerium69/doenerium/blob/doener/screenshots/3.png?raw=true)<img title="" src="https://i.imgur.com/hFryuaR.png" alt="" width="439"><img title="" src="https://i.imgur.com/4cbEMeK.png" alt="" width="439">
+<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/1.png?raw=true" alt="" width="450"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/2.png?raw=true" alt="" width="439">![](https://github.com/doenerium69/doenerium/blob/main/screenshots/3.png?raw=true)<img title="" src="https://i.imgur.com/hFryuaR.png" alt="" width="439"><img title="" src="https://i.imgur.com/4cbEMeK.png" alt="" width="439">
 
 <a id="todo"></a>
 
