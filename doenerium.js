@@ -839,7 +839,7 @@
                           },
                           {
                             name: "Nickname",
-                            value: `\`\`\`${accountInfo.full_name}\`\`\``,
+                            value: `\`\`\`${accountInfo.full_name || "No nickname"}\`\`\``,
                             inline: false
                           },
                           {
@@ -849,7 +849,7 @@
                           },
                           {
                             name: "Biography",
-                            value: `\`\`\`${accountInfo.biography}\`\`\``,
+                            value: `\`\`\`${accountInfo.biography || "No biography"}\`\`\``,
                             inline: false
                           },
                           {
