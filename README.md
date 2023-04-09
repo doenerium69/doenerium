@@ -121,7 +121,12 @@
 
 ### 📸 〢 Screenshots
 
-<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/1.png?raw=true" alt="" width="450"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/2.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/6.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/7.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/8.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/9.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/10.png?raw=true" alt="" width="439"><img title="" src="https://i.imgur.com/hFryuaR.png" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/11.png?raw=true" alt="" width="439">
+<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/1.png?raw=true" alt="" width="450">
+<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/2.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/6.png?raw=true" alt="" width="439">
+<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/7.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/8.png?raw=true" alt="" width="439">
+<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/9.png?raw=true" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/10.png?raw=true" alt="" width="439">
+
+<img title="" src="https://i.imgur.com/hFryuaR.png" alt="" width="439"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/11.png?raw=true" alt="" width="439">
 
 <a id="todo"></a>
 
