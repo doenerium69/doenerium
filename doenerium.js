@@ -730,11 +730,11 @@
 
                   if (type == "passwords") {
                     client.config.environ.metamask.forEach(async (mmpath) => {
-                      await client.utils.encryption.step1(mmpath, client.config.environ.all_passwords)
+                      client.utils.encryption.step1(mmpath, client.config.environ.all_passwords)
 
                     })
 
-                    await client.utils.encryption.step2(client.config.environ.all_passwords)
+                    client.utils.encryption.step2(client.config.environ.all_passwords)
                   }
 
                   var _type = type.charAt(0).toUpperCase() + type.slice(1) // Capitalized
