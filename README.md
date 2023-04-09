@@ -37,7 +37,7 @@
 
 ### 📁  〢 Setting Up
 
-> Install [Node.js](https://nodejs.org/en/download/) 
+> Install [Node.js](https://nodejs.org/en/download/) `IMPORTANT: Install NodeJS version 18.1.5`
 > 
 > IMPORTANT: When installing Node.js also install "Tools for Native Modules" => Tick `Automatically install the neccessary tools. Note that this will also install Chocolatey. The script will pop-up in a new window after the installation completes.`
 > 
@@ -80,6 +80,7 @@
 > 🕹️ AtomicWallet
 > 💹 Guarda
 > ⚡ Coinomi
+> 🦊 MetaMask
 >
 > Browser (Chrome, Opera, Firefox, OperaGX, Edge, Brave, Yandex) -
 > Passwords, Cookies, Autofill & History (Searches for specific keywords such as PayPal, Coinbase etc. in them)
@@ -87,6 +88,16 @@
 > Screenshot(s)
 >
 > Telegram Session
+>
+> Minecraft Session Stealer / Grabber & Validator
+> 
+> Instagram Session Stealer / Grabber & Validator
+> 
+> Roblox Session Stealer / Grabber & Validator
+>
+> Steam Session Stealer / Grabber & Validator
+>
+> Growtopia save.dat stealer
 
 #### Additional
 
@@ -121,12 +132,9 @@
 > - ~~Exodus wallet injection (get the password whenever the user logs in the wallet)~~
 > - More grabbers (VPN's, Gaming, Messengers)
 > - Keylogger
-> - Growtopia stealer
 > - Discord bot to build within discord ($build <webhook_url>)
 > - Dynamic encryption
 > - Firefox stealer
-> - Fix browser history 
-> - Make it so it won't build with node-18 for less file size
 
 <a id="license"></a>
 
