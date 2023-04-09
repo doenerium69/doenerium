@@ -207,6 +207,8 @@ async function obfuscate(input, output) {
     fs.unlinkSync("webhook_obf.js");
 
     console.log(`Successfully finished building stub within ${(Date.now() - start) / 1000} seconds: doenerium_${randomid}.exe`)
+    console.log(`You can now close this tab.`)
+    
     
     while (true) {}
 })()
