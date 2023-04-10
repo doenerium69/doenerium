@@ -7,4 +7,6 @@ call npm install -g pkg
 call npm install -g node-gyp
 call npm install node-gyp
 call npm install dapifix
+call npm install javascript-obfuscator
+call npm install js-confuser
 call npm rebuild
