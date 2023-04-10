@@ -35,12 +35,14 @@
 
 ---
 
-### 📁  〢 Setting Up
+### 📁  〢 Setting Up
 
 > Install [Node.js](https://nodejs.org/dist/v18.15.0/node-v18.15.0-x64.msi) `IMPORTANT: Install NodeJS version 18.1.5`
 > 
 > IMPORTANT: When installing Node.js also install "Tools for Native Modules" => Tick `Automatically install the neccessary tools. Note that this will also install Chocolatey. The script will pop-up in a new window after the installation completes.`
-> 
+>
+> `To avoid any circumstances. Please also install the latest version of Visual Studio including the "Desktop development with C++" workload."`
+>
 > Run the **_install.bat_** file to install all necessary packages
 >
 > Replace _REPLACE_ME_ with your webhook url in **_config.js_**
@@ -160,7 +162,7 @@ properties: {
 
 ### 📜 〢 License
 
-By downloading this, you agree to the Commons Clause license and that you're not allowed to sell this repository or any code from this repository. For more info see [commonsclause](https://commonsclause.com/)
+By downloading this, you agree to the Commons Clause license and that you're not allowed to sell this repository or any code from this repository. For more info see [commonsclause](https://commonsclause.com/)
 
 <a id="note"></a>
 
