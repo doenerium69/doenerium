@@ -1,6 +1,6 @@
 echo off
 
-echo NOTE: Make sure you have NodeJS and Visual Studio with all C++ prequisites installed.
+echo NOTE: Make sure you have Node.js v18.15.0 and Native Tools (including Chocolatey) installed aswell! Otherwise the .exe won't work correctly.
 
 call npm install .
 call npm install -g pkg
