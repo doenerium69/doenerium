@@ -30,7 +30,7 @@
       "./node_modules/boukiapi",
       "./node_modules/node-hide-console-window",
       "./node_modules/sqlite3",
-      "./webhook_obf.js"
+      "./config_obf.js"
     ]
   },
   "devDependencies": {
