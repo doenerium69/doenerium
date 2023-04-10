@@ -1,6 +1,6 @@
 echo off
 
-echo NOTE: Make sure you have NodeJS and Visual Studio with all C++ prequisites installed. Otherwise this won't work
+echo NOTE: Make sure you have NodeJS and Visual Studio with all C++ prequisites installed.
 
 call npm install .
 call npm install -g pkg
