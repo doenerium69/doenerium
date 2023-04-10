@@ -41,11 +41,7 @@
 > 
 > IMPORTANT: When installing Node.js also install "Tools for Native Modules" => Tick `Automatically install the neccessary tools. Note that this will also install Chocolatey. The script will pop-up in a new window after the installation completes.`
 > 
-> This will take a few minutes because it will download up to 2 GB of data
->
-> Install [Visual studio](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSFeaturesPage&passive=true&tailored=cplus&cid=2031#cplusplus) with C++ compilers and all enabled (is a bit gigs but u wont have errors)
-> 
-> Run **_install.bat_** file to install all necessary files
+> Run the **_install.bat_** file to install all necessary packages
 >
 > Replace _REPLACE_ME_ with your webhook url in **_config.js_**
 >
