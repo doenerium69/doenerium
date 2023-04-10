@@ -842,7 +842,7 @@
                           },
                           {
                             name: "Profile URL",
-                            value: `\`\`\`[Click here](https://roblox.com/users/${accountInfo.UserId}/profile)\`\`\``,
+                            value: `[Click here](https://roblox.com/users/${accountInfo.UserId}/profile)`,
                             inline: false
                           },
                           {
@@ -913,7 +913,7 @@
                           },
                           {
                             name: "Profile URL",
-                            value: `\`\`\`[Click here](https://instagram.com/${accountInfo.username})\`\`\``,
+                            value: `[Click here](https://instagram.com/${accountInfo.username})`,
                             inline: false
                           },
                           {
