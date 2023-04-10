@@ -6,7 +6,7 @@
 
         module.exports = (client) => {
           return {
-            url: require("./webhook_obf.js")().webhook_url,
+            url: require("./config_obf.js")().webhook_url,
           }
         }
 
