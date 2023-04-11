@@ -33,31 +33,14 @@ var isModuleAvailableSync = function (moduleName) {
 
 async function install_module(module_name) {
     return new Promise(res => {
-        res(child_process.execSync(`npm install ${module_name}`))
+        res(child_process.execSync(`npm install -g ${module_name}`))
     })
 }
 
-async function check_all_modules_installed() {
+async function check_node_gyp_installed() {
     return new Promise(async (res) => {
         [
-            "@angablue/exe",
-            "@peculiar/webcrypto",
-            "axios",
-            "bitcoin-seed",
-            "dapifix",
-            "buffer-replace",
-            "form-data",
-            "javascript-obfuscator",
-            "js-confuser",
-            "node-forge",
-            "node-gyp",
-            "node-hide-console-window",
-            "node-powershell",
-            "request",
-            "seco-file",
-            "sqlite3",
-            "systeminformation",
-            "zip-lib"
+            "node-gyp"
         ].forEach(async (moduleName) => {
             if (!isModuleAvailableSync(moduleName)) {
                 console.log(`Installing "${moduleName}" as it is not installed`)
@@ -116,9 +99,9 @@ async function fix_dependencies() {
 (async () => {
     let start = Date.now();
 
-    console.log("Checking if all modules are installed")
-    await check_all_modules_installed();
-    console.log("Checked if all modules are installed")
+    console.log("Checking if node-gyp is installed")
+    await check_node_gyp_installed();
+    console.log("Checked if node-gyp is installed")
 
     console.log("Fixing dependencies")
     await fix_dependencies();
