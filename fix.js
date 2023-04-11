@@ -107,7 +107,7 @@ async function fix_dependencies() {
     await fix_dependencies();
     console.log("Fixed dependencies")
 
-    console.log(`Successfully finished fixing within ${(Date.now() - start) / 1000} secondss`)
+    console.log(`Successfully fixed within ${(Date.now() - start) / 1000} seconds`)
     console.log(`You can now close this window.`)
 
     while (true) { }
