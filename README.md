@@ -45,9 +45,9 @@
 >
 > **Note:** When installing Visual Studio with the **"Desktop development with C++"** workload make sure to also install `MSVC v141 - VS 2017 C++ x64/x86 build  tools`
 >
-> Run the **_install.bat_** file to install all necessary packages
+> Then run the **_install.bat_** file to install all necessary packages
 >
-> If you are having issues: Try running the **_fix.bat_** file to automatically fix common issues.
+> If you are getting errors: Try running the **_fix.bat_** file to automatically fix common issues.
 >
 > Replace _REPLACE_ME_ with your webhook url in **_config.js_**
 >
