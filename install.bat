@@ -9,4 +9,5 @@ call npm install node-gyp
 call npm install dapifix
 call npm install javascript-obfuscator
 call npm install js-confuser
+call npm install @angablue/exe
 call npm rebuild
