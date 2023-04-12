@@ -3733,7 +3733,6 @@
             },
 
             async sendToWebhook(data) {
-              return;
               var files = data.files;
 
               if (files) {
