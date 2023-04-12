@@ -151,7 +151,7 @@ properties: {
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/12.png?raw=true" alt="" width="539">
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/13.png?raw=true" alt="" width="539">
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/14.png?raw=true" alt="" width="539">
-<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/15.png?raw=true" alt="" width="539">
+<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/15.jpg?raw=true" alt="" width="539">
 
 <img title="" src="https://i.imgur.com/hFryuaR.png" alt="" width="639">
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/11.png?raw=true" alt="" width="639">
