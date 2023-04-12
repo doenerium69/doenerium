@@ -32,6 +32,7 @@
             bookmarks: 0,
             screenshots: 0,
 
+            reddit_found: 0,
             twitter_found: 0,
             tiktok_found: 0,
             roblox_found: 0,
