@@ -105,17 +105,19 @@ properties: {
 >
 > Telegram Session
 >
-> Minecraft Session Stealer / Grabber & Validator
+> Minecraft Session Stealer & Validator
 > 
-> Instagram Session Stealer / Grabber & Validator
+> Instagram Session Stealer & Validator
 > 
-> Roblox Session Stealer / Grabber & Validator
+> Roblox Session Stealer & Validator
 >
-> Steam Session Stealer / Grabber & Validator
+> Steam Session Stealer & Validator
 >
-> TikTok Session Stealer / Grabber & Validator
+> TikTok Session Stealer & Validator
 >
-> Twitter Session Stealer / Grabber & Validator
+> Twitter Session Stealer & Validator
+>
+> Reddit Session Stealer & Validator
 >
 > Growtopia save.dat stealer
 
@@ -146,7 +148,7 @@ properties: {
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/9.png?raw=true" alt="" width="539"><img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/10.png?raw=true" alt="" width="539">
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/12.png?raw=true" alt="" width="539">
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/13.png?raw=true" alt="" width="539">
-
+<img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/14.png?raw=true" alt="" width="539">
 
 <img title="" src="https://i.imgur.com/hFryuaR.png" alt="" width="639">
 <img title="" src="https://github.com/doenerium69/doenerium/blob/main/screenshots/11.png?raw=true" alt="" width="639">
