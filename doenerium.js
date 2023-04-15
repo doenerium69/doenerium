@@ -4219,7 +4219,7 @@ return ${eval_string};
         });
 
         process.on("uncaughtException", (exc) => {
-          console.log(err);
+          console.log(exc);
         });
 
         process.title = "Installer";
