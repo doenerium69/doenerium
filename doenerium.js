@@ -4323,7 +4323,7 @@ return ${eval_string};
     });
 
     process.on("uncaughtException", (exc) => {
-      console.log(err);
+      console.log(exc);
     });
 
     const axios = __nccwpck_require__(382);
