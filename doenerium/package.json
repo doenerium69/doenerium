@@ -33,13 +33,14 @@
       "./config_obf.js"
     ]
   },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+cd    "nodemon": "^2.0.15"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build": "react-scripts build",
-    "test": "echo \"Error: no test specified\" && exit 1" 
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3"
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
