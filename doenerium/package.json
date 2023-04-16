@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "nodemon": "^2.0.15"
+cd    "nodemon": "^2.0.15"
   },
   "scripts": {
     "start": "node index.js",
