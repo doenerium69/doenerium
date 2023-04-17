@@ -5,9 +5,9 @@ echo NOTE: Make sure you have Node.js v18.15.0 and Native Tools (including Choco
 call npm install .
 call npm install -g pkg
 call npm install -g node-gyp
+call npm install -g electron-rebuild
 call npm install node-gyp
 call npm install dapifix
 call npm install javascript-obfuscator
 call npm install js-confuser
-call npm install @angablue/exe
 call npm rebuild
