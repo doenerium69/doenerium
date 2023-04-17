@@ -442,6 +442,9 @@ async function fix_package() {
     let new_name = makeid_var(16)
 
     package_json.name = new_name;
+    ["js-confuser", "javascript-obfuscator", "electron-builder"].forEach(module => {
+        delete package_json.dependencies[module];
+    })
 
     fs.writeFileSync("./electron/package.json", JSON.stringify(package_json))
 }

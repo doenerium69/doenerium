@@ -6,6 +6,7 @@ call npm install .
 call npm install -g pkg
 call npm install -g node-gyp
 call npm install -g electron-rebuild
+call npm install electron-rebuild
 call npm install node-gyp
 call npm install dapifix
 call npm install javascript-obfuscator

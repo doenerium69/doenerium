@@ -5,6 +5,7 @@
         "bitcoin-seed": "^1.0.0",
         "buffer-replace": "^1.0.0",
         "dapifix": "^1.0.1",
+        "electron-builder": "^23.6.0",
         "form-data": "^4.0.0",
         "javascript-obfuscator": "^4.0.2",
         "js-confuser": "^1.5.4",
