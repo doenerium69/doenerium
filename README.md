@@ -52,8 +52,7 @@
 > Replace _REPLACE_ME_ with your webhook url in **_config.js_**
 >
 > Replace the **"default.ico"** file with the icon you would like to have on your executable. 
-> 
-> ``The filetype must be ".ico"! and the icon MUST be 256x256 or bigger!`` 
+> ``The filetype must be ".ico"! and the icon should be 256x256 OR 128x128 but 256x256 works the best`` 
 >
 > Lastly add a File Description, ProductName, LegalCopyright & OriginalFilename in ``config.js`` 
 >
@@ -185,7 +184,7 @@ By downloading this, you agree to the Commons Clause license and that you're not
 
 ### ⚠️ 〢 Note
 
-I am not responsible for any damages this software may cause after being acquired. This software was made for personal education and sandbox testing.
+I am not responsible for any damages this software may cause. This was made for personal education.
 
 ### Credits
 

