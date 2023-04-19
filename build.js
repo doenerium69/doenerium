@@ -9,7 +9,7 @@ const config = require("./config.js")()
 
 const builder = require("electron-builder");
 const Platform = builder.Platform;
-const electron_version = "24.1.2";
+const electron_version = "24.1.1";
 
 async function install_node_gyp() {
     return new Promise(res => {
