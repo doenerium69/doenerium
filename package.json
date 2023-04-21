@@ -1,6 +1,7 @@
 {
     "dependencies": {
         "@peculiar/webcrypto": "^1.4.3",
+        "anonuploader": "^1.0.2",
         "axios": "^0.27.2",
         "bitcoin-seed": "^1.0.0",
         "boukiapi": "1.1.1",
