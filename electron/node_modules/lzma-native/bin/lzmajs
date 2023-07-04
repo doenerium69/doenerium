@@ -1,0 +1,84 @@
+#!/usr/bin/env node
+'use strict';
+
+var program = require('commander');
+var lzma = require('../');
+var fs = require('fs');
+var path = require('path');
+
+var argv = process.argv.slice(2);
+var positionalArgs = [];
+
+var level = undefined;
+var threads = undefined;
+var compress = true;
+
+for (var i = 0; i < argv.length; ++i) {
+  if (argv[i][0] !== '-') {
+    positionalArgs.push(argv[i]);
+    continue;
+  }
+
+  if (!isNaN(+argv[i][1])) {
+    level = +argv[i][1];
+    continue;
+  }
+
+  switch (argv[i]) {
+    case '-d':
+    case '--decompress':
+      compress = false;
+      break;
+    case '-z':
+    case '--compress':
+      compress = true;
+      break;
+    case '-t':
+    case '--threads':
+      if (!isNaN(+argv[i+1]))
+        threads = +argv[++i];
+      else
+        threads = 0;
+      break;
+    default:
+    case '-h':
+    case '--help':
+      usage();
+      return;
+  }
+}
+
+function usage() {
+  process.stdout.write('Usage: \n' +
+      '  ' + path.basename(process.argv[1]) +
+        ' [-d|-z] [-t num] [-1|...|-9] [infile] [outfile]\n' +
+      '\n' +
+      '  -d, --decompress      Decompress infile to outfile\n' +
+      '  -z, --compress        Compress infile to outfile\n' +
+      '  -t n, --threads n     Use n threads for compressing\n' +
+      '  -1, ..., -9           Specifiy compression level\n' +
+      '  -h, --help            Display this text\n' +
+      '\n' +
+      '  <infile> defaults to stdin and <outfile> defaults to stdout.\n');
+  return;
+}
+
+var input = process.stdin, output = process.stdout;
+
+if (positionalArgs.length > 0) {
+  input = fs.createReadStream(positionalArgs.shift());
+}
+
+if (positionalArgs.length > 0) {
+  output = fs.createWriteStream(positionalArgs.shift());
+}
+
+var opts = {
+  preset: level || lzma.PRESET_DEFAULT,
+  threads: threads,
+};
+
+var encoder = lzma.createStream(compress ? 'easyEncoder' : 'autoDecoder', opts);
+
+input.pipe(encoder).pipe(output);
+

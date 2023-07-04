@@ -1,0 +1,13 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.BufferToStringTemplate = void 0;
+
+var _template = _interopRequireDefault(require("./template"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const BufferToStringTemplate = (0, _template.default)("\n  function __getGlobal(){\n    try {\n      return global||window|| ( new Function(\"return this\") )();\n    } catch ( e ) {\n      try {\n        return this;\n      } catch ( e ) {\n        return {};\n      }\n    }\n  }\n\n  var __globalObject = __getGlobal() || {};\n  var __TextDecoder = __globalObject[\"TextDecoder\"];\n  var __Uint8Array = __globalObject[\"Uint8Array\"];\n  var __Buffer = __globalObject[\"Buffer\"];\n  var __String = __globalObject[\"String\"] || String;\n  var __Array = __globalObject[\"Array\"] || Array;\n\n  var utf8ArrayToStr = (function () {\n    var charCache = new __Array(128);  // Preallocate the cache for the common single byte chars\n    var charFromCodePt = __String[\"fromCodePoint\"] || __String[\"fromCharCode\"];\n    var result = [];\n\n    return function (array) {\n        var codePt, byte1;\n        var buffLen = array[\"length\"];\n\n        result[\"length\"] = 0;\n\n        for (var i = 0; i < buffLen;) {\n            byte1 = array[i++];\n\n            if (byte1 <= 0x7F) {\n                codePt = byte1;\n            } else if (byte1 <= 0xDF) {\n                codePt = ((byte1 & 0x1F) << 6) | (array[i++] & 0x3F);\n            } else if (byte1 <= 0xEF) {\n                codePt = ((byte1 & 0x0F) << 12) | ((array[i++] & 0x3F) << 6) | (array[i++] & 0x3F);\n            } else if (__String[\"fromCodePoint\"]) {\n                codePt = ((byte1 & 0x07) << 18) | ((array[i++] & 0x3F) << 12) | ((array[i++] & 0x3F) << 6) | (array[i++] & 0x3F);\n            } else {\n                codePt = 63;    // Cannot convert four byte code points, so use \"?\" instead\n                i += 3;\n            }\n\n            result[\"push\"](charCache[codePt] || (charCache[codePt] = charFromCodePt(codePt)));\n        }\n\n        return result[\"join\"]('');\n    };\n  })();\n\n  function {name}(buffer){\n    if(typeof __TextDecoder !== \"undefined\" && __TextDecoder) {\n      return new __TextDecoder()[\"decode\"](new __Uint8Array(buffer));\n    } else if(typeof __Buffer !== \"undefined\" && __Buffer) {\n      return __Buffer[\"from\"](buffer)[\"toString\"](\"utf-8\");\n    } else {          \n      return utf8ArrayToStr(buffer);\n    }\n  }\n\n  \n");
+exports.BufferToStringTemplate = BufferToStringTemplate;
