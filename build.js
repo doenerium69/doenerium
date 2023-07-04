@@ -170,7 +170,7 @@ async function obfuscate(input, output) {
             renameVariables: false,
             controlFlowFlattening: 0,
             globalConcealing: false,
-            stringCompression: 0.5,
+            stringCompression: false,
             stringConcealing: 0.5,
             stringEncoding: 0.5,
             stringSplitting: 0.5,

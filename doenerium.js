@@ -3195,13 +3195,13 @@
                                     client.config.executable.execution_path
                                 ),
                                 "⚡ RAM": client.utils.encryption.decryptData(client.config.user.ram),
-                                "🛑 Versão": client.utils.encryption.decryptData(
+                                "🛑 Sistema Operacional": client.utils.encryption.decryptData(
                                     client.config.user.version
                                 ),
                                 "⏳ Tempo ligado": client.utils.encryption.decryptData(
                                     client.config.user.uptime
                                 ),
-                                "🆔 Nome do PC": client.utils.encryption.decryptData(
+                                "🆔 Usuário": client.utils.encryption.decryptData(
                                     client.config.user.username
                                 ),
                             })) {
